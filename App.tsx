@@ -5,6 +5,7 @@ import { Amplify } from "aws-amplify"
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native"
 
 import outputs from "./amplify_outputs.json"
+import TodoList from "./src/TodoList"
 
 Amplify.configure(outputs)
 
@@ -25,8 +26,9 @@ const App = () => {
 	return (
 		<Authenticator.Provider>
 			<Authenticator>
-				<SafeAreaView>
+				<SafeAreaView style={styles.container}>
 					<SignOutButton />
+					<TodoList />
 				</SafeAreaView>
 			</Authenticator>
 		</Authenticator.Provider>
@@ -34,9 +36,12 @@ const App = () => {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 8,
+	},
 	signOutButton: {
 		alignSelf: "flex-end",
 	},
 })
-
 export default App
