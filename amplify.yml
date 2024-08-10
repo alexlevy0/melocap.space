@@ -1,0 +1,31 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - yarn install --immutable --immutable-cache --check-cache
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - nvm install 20.12.2
+        - nvm use 20.12.2
+        - yarn global add expo-cli
+        - yarn install
+    build:
+      commands:
+        - mkdir ./dist && touch ./dist/index.html
+        - 'npx expo export -p web'
+    postBuild:
+      commands:
+        - cd dist
+        - ls
+  artifacts:
+    baseDirectory: dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .yarn/**/*
+      - $(yarn global dir)/**/*
