@@ -7,7 +7,9 @@ import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native"
 import outputs from "./amplify_outputs.json"
 import TodoList from "./src/TodoList"
 
-Amplify.configure(outputs)
+Amplify.configure(outputs, {
+	ssr: true
+})
 
 const SignOutButton = () => {
 	const { signOut } = useAuthenticator()
