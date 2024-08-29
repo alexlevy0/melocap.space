@@ -1,115 +1,163 @@
-import outputs from "@/amplify_outputs.json"
-import { makeIcon } from "@/app/components/icon"
-import "@/tamagui-web.css"
-import { tamaguiConfig } from "@/tamagui.config"
-import { Authenticator } from "@aws-amplify/ui-react-native"
-import { ActionSheetProvider } from "@expo/react-native-action-sheet"
+/**
+ * @fileoverview Main layout component for the Tamagui-based application
+ * @module Layout
+ */
+
+import type React from "react";
+import { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, useColorScheme } from "react-native";
+import {
+	TamaguiProvider,
+	YStack,
+	XStack,
+	H1,
+	H2,
+	Paragraph,
+	Button,
+	Theme,
+} from "tamagui";
+import { BlurView } from "expo-blur";
+import { useFonts } from "expo-font";
+import Head from "expo-router/head";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import { Authenticator } from "@aws-amplify/ui-react-native";
+import { Amplify } from "aws-amplify";
+
+import { tamaguiConfig } from "./../tamagui.config";
+import { AnimatedBackground } from "@/app/components/AnimatedBackground";
+import { Header } from "@/app/components/HeaderComponent";
+import { FeatureCard } from "@/app/components/FeatureCard";
+import outputs from "./../amplify_outputs.json";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native"
-import { Amplify } from "aws-amplify"
-import { useFonts } from "expo-font"
-import { Tabs } from "expo-router"
-import Head from "expo-router/head"
-import React, { useEffect } from "react"
-import { SafeAreaView, StyleSheet, useColorScheme } from "react-native"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { TamaguiProvider } from "tamagui"
-import { Main } from "@/app/components/main"
+// Configure Amplify
+Amplify.configure(outputs, { ssr: true });
 
-type Conf = typeof tamaguiConfig
-declare module "@tamagui/core" {
-	interface TamaguiCustomConfig extends Conf {}
-}
-// import TodoList from "@/app/TodoList"
 
-Amplify.configure(outputs, {
-	ssr: true,
-})
-
-const App = () => {
-	const colorScheme = useColorScheme()
-
+/**
+ * Main application component
+ * @returns {React.ReactElement} The rendered application
+ */
+const App: React.FC = () => {
+	const colorScheme = useColorScheme();
 	const [loaded] = useFonts({
 		Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
 		InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-	})
+	});
 
 	useEffect(() => {
 		if (loaded) {
-			// can hide splash screen here
+			// Hide splash screen here if needed
 		}
-	}, [loaded])
+	}, [loaded]);
 
 	if (!loaded) {
-		return null
+		return null;
 	}
 
 	return (
 		<ActionSheetProvider>
-			<TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme ?? "light"}>
-				<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+			<TamaguiProvider
+				config={tamaguiConfig}
+				defaultTheme={colorScheme ?? "light"}
+			>
+				<ThemeProvider
+					value={
+						colorScheme === "dark"
+							? DarkTheme
+							: DefaultTheme
+					}
+				>
 					<Authenticator.Provider>
-						{/* <Authenticator> */}
-							{/* <MainApp></MainApp> */}
-							<Main></Main>
-						{/* </Authenticator> */}
+						<Theme
+							name={
+								colorScheme ===
+								"dark"
+									? "dark"
+									: "light"
+							}
+						>
+							<Layout />
+						</Theme>
 					</Authenticator.Provider>
 				</ThemeProvider>
 			</TamaguiProvider>
 		</ActionSheetProvider>
-	)
-}
+	);
+};
+
+
+/**
+ * Layout component containing the main content
+ * @returns {React.ReactElement} The rendered layout
+ */
+const Layout: React.FC = () => {
+	return (
+		<SafeAreaView style={styles.container}>
+			<Head>
+				<title>MeloCaps : Sonorité d’avenir !</title>
+				<meta
+					name="description"
+					content="Tamagui - React Native UI Kit"
+				/>
+			</Head>
+			<AnimatedBackground />
+			<BlurView
+				intensity={80}
+				tint="light"
+				style={styles.blurView}
+			>
+				<Header />
+			</BlurView>
+			<YStack f={1} jc="center" ai="center" space="$4" p="$4">
+				<H1 ta="center" fow="800">
+				MeloCap
+				</H1>
+				<H2 ta="center" col="$orange10">
+				Sonorité d’avenir !
+				</H2>
+				<Button size="$6" theme="active" br="$10">
+				À vos paris, vibrez, jouez !
+				</Button>
+				<XStack space="$4">
+					<Button icon={TwitterIcon} circular />
+					<Button icon={DiscordIcon} circular />
+				</XStack>
+				<XStack mt="$8" space="$8">
+					<FeatureCard
+						title="À vos Paris"
+						description="Découvrez chaque jour un nouveau thème musical et misez sur les morceaux qui capturent le mieux son essence. Entrez dans le jeu et mettez vos connaissances musicales à l'épreuve !
+
+"
+					/>
+					<FeatureCard
+						title="Misez"
+						description="Sélectionnez vos morceaux et soumettez votre playlist pour participer au défi du jour. La diversité et l'originalité de vos choix pourraient bien faire la différence !"
+					/>
+					<FeatureCard
+						title="Jouez"
+						description="Suivez votre progression dans le classement et rivalisez avec les autres participants pour décrocher la première place. Gagnez des récompenses virtuelles en démontrant votre expertise musicale !"
+					/>
+				</XStack>
+			</YStack>
+		</SafeAreaView>
+	);
+};
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 8,
 	},
-})
-export default App
+	blurView: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		height: 60,
+	},
+});
 
-const MainApp = () => {
-	return (
-		<SafeAreaView style={styles.container}>
-			<>
-				<Head>
-					<title>MeloCap</title>
-					<meta name="description" content="MeloCap App" />
-					<meta property="og:description" content="MeloCap App" />
-					<meta property="og:image" content="/og-image.jpg" />
-					<meta property="expo:handoff" content="true" />
-					<meta property="expo:spotlight" content="true" />
-				</Head>
-				<GestureHandlerRootView style={{ flex: 1 }}>
-					<Tabs
-						screenOptions={{
-							headerShown: false,
-							tabBarShowLabel: false,
-							tabBarActiveTintColor: "rgb(29, 155, 240)",
-						}}
-					>
-						<Tabs.Screen
-							name="(index)"
-							options={{
-								title: "Home",
-								tabBarIcon: makeIcon("home", "home-active"),
-							}}
-						/>
-						<Tabs.Screen
-							name="(search)"
-							options={{
-								title: "Search",
-								tabBarIcon: makeIcon("explore", "explore-active"),
-							}}
-						/>
-						<Tabs.Screen
-							name="(profile)"
-							options={{
-								title: "Profile",
-								tabBarIcon: makeIcon("profile", "profile-active"),
-							}}
-						/>
-					</Tabs>
-				</GestureHandlerRootView>
-			</>
-		</SafeAreaView>
-	)
-}
+// Placeholder icons (replace with actual implementations)
+const TwitterIcon: React.FC = () => null;
+const DiscordIcon: React.FC = () => null;
+
+export default App;

@@ -12,7 +12,7 @@ export const Main = () => {
           <YStack f={1} jc="flex-start" ai="center" space>
             <BlurView intensity={10} style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 60 }}>
               <XStack jc="space-between" ai="center" px="$4" py="$2">
-                <Text>Tamagui</Text>
+                <Text>À vos paris, vibrez, jouez !</Text>
                 <XStack space>
                   <Text>DOCS</Text>
                   <Text>UI</Text>
@@ -27,7 +27,7 @@ export const Main = () => {
               <Text ta="center">STYLES · OPTIMIZING COMPILER · UI KIT</Text>
               <Text ta="center">FOR REACT · EVERY PLATFORM</Text>
               
-              <Input placeholder="npm create tamagui" w={250} />
+              <Input placeholder="À vos paris, vibrez, jouez !" w={250} />
               
               <XStack space>
                 <Button size="$3" theme="alt1">START</Button>
@@ -36,16 +36,16 @@ export const Main = () => {
 
             <YStack space="$6" mt="$10">
               <Feature
-                title="CORE"
-                description="A style library for React and/or React Native with a large typed superset of the React Native style API, with no outside dependencies in about 24Kb."
+                title="Pariez"
+                description="Découvrez chaque jour un nouveau thème musical et misez sur les morceaux qui capturent le mieux son essence. Entrez dans le jeu et mettez vos connaissances musicales à l'épreuve !"
               />
               <Feature
-                title="STATIC"
-                description="A smart optimizer that makes your app fast with partial analysis, extracts CSS, flattens your tree, and removes code. Next, Webpack, Vite, Babel and Metro."
+                title="Misez"
+                description="Sélectionnez vos morceaux et soumettez votre playlist pour participer au défi du jour. La diversité et l'originalité de vos choix pourraient bien faire la différence !"
               />
               <Feature
-                title="TAMAGUI"
-                description="All the components you'd want, cross platform and adaptable to each other. Compound Component APIs, styled or unstyled, sizable, themeable, and more."
+                title="Dansez"
+                description="Suivez votre progression dans le classement et rivalisez avec les autres participants pour décrocher la première place. Gagnez des récompenses virtuelles en démontrant votre expertise musicale !"
               />
             </YStack>
           </YStack>
