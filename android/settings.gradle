@@ -1,4 +1,4 @@
-rootProject.name = 'melocap.space'
+rootProject.name = 'melocap'
 
 dependencyResolutionManagement {
   versionCatalogs {

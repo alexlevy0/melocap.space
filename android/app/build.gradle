@@ -83,9 +83,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.alexlevy0.melocap.space'
+    namespace 'com.alexlevy0.melocap'
     defaultConfig {
-        applicationId 'com.alexlevy0.melocap.space'
+        applicationId 'com.alexlevy0.melocap'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

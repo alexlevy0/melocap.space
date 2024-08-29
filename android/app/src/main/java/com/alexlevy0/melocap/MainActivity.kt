@@ -1,4 +1,4 @@
-package com.alexlevy0.melocap.space
+package com.alexlevy0.melocap
 
 import android.os.Build
 import android.os.Bundle

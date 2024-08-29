@@ -1,0 +1,28 @@
+{
+	"name": "liveness-ts-image",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
+		"createRole": "npx ts-node create-role.ts"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@aws-sdk/client-ecr": "3.632.0",
+		"@aws-sdk/client-iam": "3.632.0",
+		"@types/aws-lambda": "8.10.143",
+		"@types/node": "22.4.0",
+		"@types/semver": "7.5.8",
+		"esbuild": "0.23.1",
+		"semver": "7.6.3",
+		"ts-node": "10.9.2",
+		"typescript": "5.5.4"
+	},
+	"dependencies": {
+		"@aws-sdk/client-rekognition": "3.632.0",
+		"uuid": "10.0.0"
+	}
+}
