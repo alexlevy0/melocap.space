@@ -17,15 +17,21 @@ const useBackgroundAnimation = (): Animated.AnimatedInterpolation => {
 		Animated.loop(
 			Animated.timing(animation, {
 				toValue: 1,
-				duration: 10000,
+				duration: 42000,
 				useNativeDriver: false,
 			}),
 		).start();
 	}, [animation]);
 
 	return animation.interpolate({
-		inputRange: [0, 0.33, 0.66, 1],
-		outputRange: ["#FFB3BA", "#BAFFC9", "#BAE1FF", "#FFB3BA"],
+		inputRange: [0, 0.25, 0.5, 0.75, 1],
+		outputRange: [
+			'rgba(138, 4, 2, 1)',
+			'rgba(142, 4, 2, 1)',
+			'rgba(138, 4, 2, 1)',
+			'rgba(142, 4, 2, 1)',
+			'rgba(138, 4, 2, 1)',
+		],
 	});
 };
 
