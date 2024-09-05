@@ -30,7 +30,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 	},
 	plugins: [
 		"expo-font",
-		["expo-router", { origin: "https://192.168.1.166:8081" }],
+		// @ts-ignore Property 'EXPO_PUBLIC_EXPO_ROUTER_ORIGIN' does not exist on type 'typeof env'
+		["expo-router", { origin: process.env.EXPO_PUBLIC_EXPO_ROUTER_ORIGIN || '' }],
 		"expo-splash-screen",
 	],
 });
