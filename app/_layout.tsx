@@ -3,35 +3,42 @@
  * @module Layout
  */
 
-import type React from "react";
-import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, useColorScheme } from "react-native";
-import {
-	TamaguiProvider,
-	YStack,
-	XStack,
-	H1,
-	H2,
-	Paragraph,
-	Button,
-	Theme,
-} from "tamagui";
+import { Authenticator } from "@aws-amplify/ui-react-native";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import { Amplify } from "aws-amplify";
 import { BlurView } from "expo-blur";
 import { useFonts } from "expo-font";
 import Head from "expo-router/head";
-import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import { Authenticator } from "@aws-amplify/ui-react-native";
-import { Amplify } from "aws-amplify";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, useColorScheme, View } from "react-native";
+import {
+	Button,
+	H1,
+	H2,
+	Paragraph,
+	TamaguiProvider,
+	Theme,
+	XStack,
+	YStack,
+} from "tamagui";
 
-import { tamaguiConfig } from "./../tamagui.config";
 import { AnimatedBackground } from "@/app/components/AnimatedBackground";
-import { Header } from "@/app/components/HeaderComponent";
 import { FeatureCard } from "@/app/components/FeatureCard";
-import outputs from "./../amplify_outputs.json";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native"
-// Configure Amplify
-Amplify.configure(outputs, { ssr: true });
+import { Header } from "@/app/components/HeaderComponent";
+import {
+	DarkTheme,
+	DefaultTheme,
+	ThemeProvider,
+} from "@react-navigation/native";
+import { tamaguiConfig } from "./../tamagui.config";
 
+import "@/app/styles/styles.module.css";
+
+import outputs from "./../amplify_outputs.json";
+import SocialButtons from "./icons";
+import { LivenessQuickStartReact } from "./components/liveness";
+Amplify.configure(outputs, { ssr: true });
 
 /**
  * Main application component
@@ -77,6 +84,7 @@ const App: React.FC = () => {
 							}
 						>
 							<Layout />
+							{/* <LivenessQuickStartReact/> */}
 						</Theme>
 					</Authenticator.Provider>
 				</ThemeProvider>
@@ -84,7 +92,6 @@ const App: React.FC = () => {
 		</ActionSheetProvider>
 	);
 };
-
 
 /**
  * Layout component containing the main content
@@ -108,26 +115,26 @@ const Layout: React.FC = () => {
 			>
 				<Header />
 			</BlurView>
+			
 			<YStack f={1} jc="center" ai="center" space="$4" p="$4">
 				<H1 ta="center" fow="800">
-				MeloCap
+					MeloCap
 				</H1>
 				<H2 ta="center" col="$orange10">
-				Sonorité d’avenir !
+					Sonorité d’avenir !
 				</H2>
 				<Button size="$6" theme="active" br="$10">
-				À vos paris, vibrez, jouez !
+					À vos paris, vibrez, jouez !
 				</Button>
 				<XStack space="$4">
-					<Button icon={TwitterIcon} circular />
-					<Button icon={DiscordIcon} circular />
+					<View style={styles.container}>
+						<SocialButtons />
+					</View>
 				</XStack>
 				<XStack mt="$8" space="$8">
 					<FeatureCard
 						title="À vos Paris"
-						description="Découvrez chaque jour un nouveau thème musical et misez sur les morceaux qui capturent le mieux son essence. Entrez dans le jeu et mettez vos connaissances musicales à l'épreuve !
-
-"
+						description="Découvrez chaque jour un nouveau thème musical et misez sur les morceaux qui capturent le mieux son essence. Entrez dans le jeu et mettez vos connaissances musicales à l'épreuve !"
 					/>
 					<FeatureCard
 						title="Misez"
