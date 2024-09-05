@@ -26,12 +26,9 @@ export const Main = () => {
               <H1 ta="center" fow="800" col="$orange10">runs faster</H1>
               <Text ta="center">STYLES · OPTIMIZING COMPILER · UI KIT</Text>
               <Text ta="center">FOR REACT · EVERY PLATFORM</Text>
-              
+
               <Input placeholder="À vos paris, vibrez, jouez !" w={250} />
               
-              <XStack space>
-                <Button size="$3" theme="alt1">START</Button>
-              </XStack>
             </YStack>
 
             <YStack space="$6" mt="$10">
