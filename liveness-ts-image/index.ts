@@ -1,35 +1,49 @@
-import {
-	RekognitionClient,
-	CreateFaceLivenessSessionCommand,
-} from "@aws-sdk/client-rekognition";
+import { RekognitionClient, CreateFaceLivenessSessionCommand } from "@aws-sdk/client-rekognition";
 import type { APIGatewayProxyHandler } from "aws-lambda";
 import { v4 as uuid } from 'uuid';
 
 const rekognitionClient = new RekognitionClient({ region: "us-west-2" });
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-	try {
-		const params = {
-			ClientRequestToken: uuid(),
-		};
+    const headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "OPTIONS,POST",
+    };
 
-		const command = new CreateFaceLivenessSessionCommand(params);
-		const response = await rekognitionClient.send(command);
+    if (event.httpMethod === 'OPTIONS') {
+        // Handle CORS preflight request
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({}),
+        };
+    }
 
-		const sessionId = response.SessionId;
+    try {
+        const params = {
+            ClientRequestToken: uuid(),
+        };
 
-		return {
-			statusCode: 200,
-			body: JSON.stringify({ sessionId }),
-		};
-	} catch (error) {
-		console.error("Error creating face liveness session:", error);
+        const command = new CreateFaceLivenessSessionCommand(params);
+        const response = await rekognitionClient.send(command);
 
-		return {
-			statusCode: 500,
-			body: JSON.stringify({
-				error: "Failed to create face liveness session",
-			}),
-		};
-	}
+        const sessionId = response.SessionId;
+
+        return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({ sessionId }),
+        };
+    } catch (error) {
+        console.error("Error creating face liveness session:", error);
+
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({
+                error: "Failed to create face liveness session",
+            }),
+        };
+    }
 };
