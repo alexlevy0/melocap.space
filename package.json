@@ -19,8 +19,8 @@
 		"test:liveness:docker": "cd liveness-ts-image && docker run --platform linux/amd64 -p 9000:8080 docker-image:test",
 		"deploying:liveness:docker:login": "cd liveness-ts-image && aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin 327852390890.dkr.ecr.us-west-2.amazonaws.com",
 		"deploying:liveness:docker:create:repository": "cd liveness-ts-image && aws ecr create-repository --repository-name liveness-ts --region us-west-2 --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE",
-		"deploying:liveness:docker:create:tag": "ts-node scripts/dockerManager.ts tag",
-		"deploying:liveness:docker:push": "ts-node scripts/dockerManager.ts push"
+		"deploying:liveness:docker:create:tag": "ts-node liveness-ts-image/scripts/dockerManager.ts tag",
+		"deploying:liveness:docker:push": "ts-node liveness-ts-image/scripts/dockerManager.ts push"
 	},
 	"dependencies": {
 		"@aws-amplify/react-native": "1.1.4",
@@ -30,6 +30,7 @@
 		"@aws-sdk/node-config-provider": "3.374.0",
 		"@aws-sdk/property-provider": "3.374.0",
 		"@aws-sdk/protocol-http": "3.374.0",
+		"@expo-google-fonts/space-mono": "0.2.3",
 		"@expo/metro-runtime": "~3.2.1",
 		"@expo/react-native-action-sheet": "4.1.0",
 		"@react-native-async-storage/async-storage": "1.23.1",
@@ -59,7 +60,7 @@
 		"@tamagui/stacks": "1.108.2",
 		"@tamagui/themes": "1.108.2",
 		"@tamagui/toast": "1.108.2",
-		"@types/react": "~18.2.14",
+		"@types/react": "~18.2.45",
 		"aws-amplify": "6.5.1",
 		"aws-lambda": "1.0.7",
 		"expo": "~51.0.25",
@@ -141,6 +142,7 @@
 		"constructs": "10.3.0",
 		"esbuild": "0.23.0",
 		"react-native-svg-transformer": "^1.4.0",
+		"ts-node": "10.9.2",
 		"tsx": "4.17.0",
 		"typescript": "5.5.4"
 	},
