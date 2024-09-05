@@ -1,65 +1,71 @@
-import { Loader, ThemeProvider } from "@aws-amplify/ui-react"
+import { Loader } from "@aws-amplify/ui-react"
 import { FaceLivenessDetector } from "@aws-amplify/ui-react-liveness"
+import type { LivenessError } from "@aws-amplify/ui-react-liveness/dist/types/components/FaceLivenessDetector/service/types"
+import "@aws-amplify/ui-react/styles.css"
 import React from "react"
-import "@aws-amplify/ui-react/styles.css";
 
 export function LivenessQuickStartReact() {
 	const [loading, setLoading] = React.useState<boolean>(true)
-	const [createLivenessApiData, setCreateLivenessApiData] = React.useState<{
-		sessionId: string
-	} | null>(null)
+	const [createLivenessApiData, setCreateLivenessApiData] = React.useState<{ sessionId: string } | null>(null)
 
 	React.useEffect(() => {
 		const fetchCreateLiveness: () => Promise<void> = async () => {
-			/*
-			 * This should be replaced with a real call to your own backend API
-			 */
-			await new Promise((r) => setTimeout(r, 2000))
-			const mockResponse = { sessionId: "mockSessionId" }
-			const data = mockResponse
+			try {
+				// Making a POST request to the provided Lambda function URL
+				const response = await fetch("https://tik525dl3evi2fihfjj37l7i7y0rfhoq.lambda-url.us-west-2.on.aws/", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				})
 
-			setCreateLivenessApiData(data)
-			setLoading(false)
+				if (!response.ok) {
+					throw new Error("Failed to create liveness session")
+				}
+
+				const data = await response.json()
+				setCreateLivenessApiData(data)
+			} catch (error) {
+				console.error("Error fetching the sessionId:", error)
+			} finally {
+				setLoading(false)
+			}
 		}
 
 		fetchCreateLiveness()
 	}, [])
 
 	const handleAnalysisComplete: () => Promise<void> = async () => {
-		/*
-		 * This should be replaced with a real call to your own backend API
-		 */
-		const response = await fetch(`/api/get?sessionId=${createLivenessApiData.sessionId}`)
-		const data = await response.json()
+		if (!createLivenessApiData?.sessionId) {
+			console.error("Session ID not available")
+			return
+		}
 
-		/*
-		 * Note: The isLive flag is not returned from the GetFaceLivenessSession API
-		 * This should be returned from your backend based on the score that you
-		 * get in response. Based on the return value of your API you can determine what to render next.
-		 * Any next steps from an authorization perspective should happen in your backend and you should not rely
-		 * on this value for any auth related decisions.
-		 */
-		if (data.isLive) {
-			console.log("User is live")
-		} else {
-			console.log("User is not live")
+		try {
+			const response = await fetch(`/api/get?sessionId=${createLivenessApiData.sessionId}`)
+			const data = await response.json()
+
+			// Handle the analysis result here
+			console.log("Liveness analysis result:", data)
+		} catch (error) {
+			console.error("Error fetching the analysis result:", error)
 		}
 	}
 
+	if (loading) {
+		return <Loader />
+	}
+
+	const onError = (livenessError: LivenessError) => {
+		console.error(livenessError)
+	}
+
 	return (
-		<ThemeProvider>
-			{loading ? (
-				<Loader />
-			) : (
-				<FaceLivenessDetector
-					sessionId={createLivenessApiData.sessionId}
-					region="us-west-2"
-					onAnalysisComplete={handleAnalysisComplete}
-					onError={(error) => {
-						console.error(error)
-					}}
-				/>
-			)}
-		</ThemeProvider>
+		<FaceLivenessDetector
+			onError={onError}
+			region="us-west-2"
+			sessionId={createLivenessApiData?.sessionId || ''}
+			onAnalysisComplete={handleAnalysisComplete}
+		/>
 	)
 }
