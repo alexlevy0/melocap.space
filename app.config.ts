@@ -1,4 +1,4 @@
-import { ExpoConfig, ConfigContext } from "expo/config"
+import type { ExpoConfig, ConfigContext } from "expo/config";
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
 	...config,
@@ -13,6 +13,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 		resizeMode: "contain",
 		backgroundColor: "#ffffff",
 	},
+	scheme: "melocap",
 	ios: {
 		supportsTablet: true,
 		bundleIdentifier: "com.alexlevy0.melocap",
@@ -27,5 +28,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 	web: {
 		favicon: "./assets/favicon.png",
 	},
-	plugins: ["expo-font", "expo-router", "expo-splash-screen"],
-})
+	plugins: [
+		"expo-font",
+		["expo-router", { origin: "https://192.168.1.166:8081" }],
+		"expo-splash-screen",
+	],
+});
