@@ -49,3 +49,5 @@ export async function measurePromise(fn: () => Promise<unknown>): Promise<string
   const formattedSeconds = seconds.toString().padStart(2, '0')
   return `${wholeMinutes}mn ${formattedSeconds}s`
 }
+
+export const goldenRatio = (1 + Math.sqrt(5)) / 2
