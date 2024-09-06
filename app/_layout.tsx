@@ -8,10 +8,12 @@ import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { Amplify } from "aws-amplify";
 import { BlurView } from "expo-blur";
 import { useFonts } from "expo-font";
+import { Tabs } from "expo-router";
 import Head from "expo-router/head";
+// import type React from "react";
 import type React from "react";
-import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, useColorScheme, View } from "react-native";
+iport { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, View, useColorScheme } from "react-native";
 import {
 	Button,
 	H1,
@@ -35,9 +37,11 @@ import { tamaguiConfig } from "./../tamagui.config";
 
 import "@/app/styles/styles.module.css";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import outputs from "./../amplify_outputs.json";
-import SocialButtons from "./icons";
 import { LivenessQuickStartReact } from "./components/liveness";
+import SocialButtons from "./icons";
+import { makeIcon } from "./components/icon";
 Amplify.configure(outputs, { ssr: true });
 
 /**
@@ -83,7 +87,10 @@ const App: React.FC = () => {
 									: "light"
 							}
 						>
-							<Layout />
+							<Authenticator>
+								<LayoutApp />
+							</Authenticator>
+							{/* <Layout /> */}
 							{/* <LivenessQuickStartReact/> */}
 						</Theme>
 					</Authenticator.Provider>
@@ -98,6 +105,9 @@ const App: React.FC = () => {
  * @returns {React.ReactElement} The rendered layout
  */
 const Layout: React.FC = () => {
+	const onPress = () => {
+		console.log("onPress");
+	};
 	return (
 		<SafeAreaView style={styles.container}>
 			<Head>
@@ -115,7 +125,7 @@ const Layout: React.FC = () => {
 			>
 				<Header />
 			</BlurView>
-			
+
 			<YStack f={1} jc="center" ai="center" space="$4" p="$4">
 				<H1 ta="center" fow="800">
 					MeloCap
@@ -123,8 +133,13 @@ const Layout: React.FC = () => {
 				<H2 ta="center" col="$orange10">
 					Sonorité d’avenir !
 				</H2>
-				<Button size="$6" theme="active" br="$10">
-					À vos paris, vibrez, jouez !
+				<Button
+					size="$6"
+					theme="active"
+					br="$10"
+					onPress={onPress}
+				>
+					À vos paris, vibrez, jouez !!
 				</Button>
 				<XStack space="$4">
 					<View style={styles.container}>
@@ -168,3 +183,46 @@ const TwitterIcon: React.FC = () => null;
 const DiscordIcon: React.FC = () => null;
 
 export default App;
+
+const LayoutApp = () => (
+	<GestureHandlerRootView style={{ flex: 1 }}>
+		<Tabs
+			screenOptions={{
+				headerShown: false,
+				tabBarShowLabel: false,
+				tabBarActiveTintColor: "rgb(29, 155, 240)",
+			}}
+		>
+			<Tabs.Screen
+				name="(index)"
+				options={{
+					title: "Home",
+					tabBarIcon: makeIcon(
+						"home",
+						"home-active",
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="(search)"
+				options={{
+					title: "Search",
+					tabBarIcon: makeIcon(
+						"explore",
+						"explore-active",
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="(profile)"
+				options={{
+					title: "Profile",
+					tabBarIcon: makeIcon(
+						"profile",
+						"profile-active",
+					),
+				}}
+			/>
+		</Tabs>
+	</GestureHandlerRootView>
+);
