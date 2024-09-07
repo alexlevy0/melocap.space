@@ -15,7 +15,7 @@ export const Header: React.FC<{ onPressFaceLivenessDetector: () => void }> = ({ 
 	return (
 		<XStack flex={1} jc="space-between" ai="center" px="$4" py="$2">
 			<XStack ai="center">
-				<Text>MeloCap</Text>
+				<Text>La</Text>
 			</XStack>
 			<XStack space="$4" ai="center">
 				<Button
