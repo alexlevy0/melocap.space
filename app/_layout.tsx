@@ -3,93 +3,63 @@
  * @module Layout
  */
 
-import { Authenticator } from "@aws-amplify/ui-react-native";
-import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import { Amplify } from "aws-amplify";
-import { BlurView } from "expo-blur";
-import { useFonts } from "expo-font";
-import { Tabs } from "expo-router";
-import Head from "expo-router/head";
-// import type React from "react";
-import type React from "react";
-iport { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View, useColorScheme } from "react-native";
-import {
-	Button,
-	H1,
-	H2,
-	Paragraph,
-	TamaguiProvider,
-	Theme,
-	XStack,
-	YStack,
-} from "tamagui";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native"
+import { ActionSheetProvider } from "@expo/react-native-action-sheet"
+import { Amplify } from "aws-amplify"
+import { BlurView } from "expo-blur"
+import { useFonts } from "expo-font"
+import { Tabs } from "expo-router"
+import Head from "expo-router/head"
+import React from "react"
+import { SafeAreaView, StyleSheet, View, useColorScheme } from "react-native"
+import { Button, H1, H2, Paragraph, TamaguiProvider, Theme, XStack, YStack } from "tamagui"
 
-import { AnimatedBackground } from "@/app/components/AnimatedBackground";
-import { FeatureCard } from "@/app/components/FeatureCard";
-import { Header } from "@/app/components/HeaderComponent";
-import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
-} from "@react-navigation/native";
-import { tamaguiConfig } from "./../tamagui.config";
+import { AnimatedBackground } from "@/app/components/AnimatedBackground"
+import { FeatureCard } from "@/app/components/FeatureCard"
+import { Header } from "@/app/components/HeaderComponent"
+import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native"
+import { tamaguiConfig } from "./../tamagui.config"
+import { signOut, getCurrentUser } from "aws-amplify/auth"
 
-import "@/app/styles/styles.module.css";
+import "@/app/styles/styles.module.css"
 
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import outputs from "./../amplify_outputs.json";
-import { LivenessQuickStartReact } from "./components/liveness";
-import SocialButtons from "./icons";
-import { makeIcon } from "./components/icon";
-Amplify.configure(outputs, { ssr: true });
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import outputs from "./../amplify_outputs.json"
+import { makeIcon } from "./components/icon"
+import { LivenessQuickStartReact } from "./components/liveness"
+import SocialButtons from "./icons"
+Amplify.configure(outputs, { ssr: true })
 
 /**
  * Main application component
  * @returns {React.ReactElement} The rendered application
  */
 const App: React.FC = () => {
-	const colorScheme = useColorScheme();
+	const colorScheme = useColorScheme()
 	const [loaded] = useFonts({
 		Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
 		InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-	});
+	})
 
-	useEffect(() => {
+	React.useEffect(() => {
 		if (loaded) {
 			// Hide splash screen here if needed
 		}
-	}, [loaded]);
+	}, [loaded])
 
 	if (!loaded) {
-		return null;
+		return null
 	}
 
 	return (
 		<ActionSheetProvider>
-			<TamaguiProvider
-				config={tamaguiConfig}
-				defaultTheme={colorScheme ?? "light"}
-			>
-				<ThemeProvider
-					value={
-						colorScheme === "dark"
-							? DarkTheme
-							: DefaultTheme
-					}
-				>
+			<TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme ?? "light"}>
+				<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
 					<Authenticator.Provider>
-						<Theme
-							name={
-								colorScheme ===
-								"dark"
-									? "dark"
-									: "light"
-							}
-						>
-							<Authenticator>
-								<LayoutApp />
-							</Authenticator>
+						<Theme name={colorScheme === "dark" ? "dark" : "light"}>
+							{/* <Authenticator> */}
+							<LayoutApp />
+							{/* </Authenticator> */}
 							{/* <Layout /> */}
 							{/* <LivenessQuickStartReact/> */}
 						</Theme>
@@ -97,8 +67,8 @@ const App: React.FC = () => {
 				</ThemeProvider>
 			</TamaguiProvider>
 		</ActionSheetProvider>
-	);
-};
+	)
+}
 
 /**
  * Layout component containing the main content
@@ -106,24 +76,22 @@ const App: React.FC = () => {
  */
 const Layout: React.FC = () => {
 	const onPress = () => {
-		console.log("onPress");
-	};
+		console.log("onPress")
+	}
 	return (
 		<SafeAreaView style={styles.container}>
 			<Head>
 				<title>MeloCaps : Sonorité d’avenir !</title>
-				<meta
-					name="description"
-					content="Tamagui - React Native UI Kit"
-				/>
+				<meta name="description" content="Tamagui - React Native UI Kit" />
 			</Head>
 			<AnimatedBackground />
-			<BlurView
-				intensity={80}
-				tint="light"
-				style={styles.blurView}
-			>
-				<Header />
+			<BlurView intensity={80} tint="light" style={styles.blurView}>
+				{/* biome-ignore lint/complexity/useArrowFunction: <explanation> */}
+				<Header
+					onPressFaceLivenessDetector={(): void => {
+						throw new Error("Function not implemented.")
+					}}
+				/>
 			</BlurView>
 
 			<YStack f={1} jc="center" ai="center" space="$4" p="$4">
@@ -133,12 +101,7 @@ const Layout: React.FC = () => {
 				<H2 ta="center" col="$orange10">
 					Sonorité d’avenir !
 				</H2>
-				<Button
-					size="$6"
-					theme="active"
-					br="$10"
-					onPress={onPress}
-				>
+				<Button size="$6" theme="active" br="$10" onPress={onPress}>
 					À vos paris, vibrez, jouez !!
 				</Button>
 				<XStack space="$4">
@@ -162,8 +125,8 @@ const Layout: React.FC = () => {
 				</XStack>
 			</YStack>
 		</SafeAreaView>
-	);
-};
+	)
+}
 
 const styles = StyleSheet.create({
 	container: {
@@ -176,53 +139,79 @@ const styles = StyleSheet.create({
 		right: 0,
 		height: 60,
 	},
-});
+})
 
 // Placeholder icons (replace with actual implementations)
-const TwitterIcon: React.FC = () => null;
-const DiscordIcon: React.FC = () => null;
+const TwitterIcon: React.FC = () => null
+const DiscordIcon: React.FC = () => null
 
-export default App;
+async function currentAuthenticatedUser() {
+	try {
+		const { username, userId, signInDetails } = await getCurrentUser()
+		console.log(`The username: ${username}`)
+		console.log(`The userId: ${userId}`)
+		console.log(`The signInDetails: ${signInDetails}`)
+	} catch (err) {
+		console.log(err)
+	}
+}
 
-const LayoutApp = () => (
-	<GestureHandlerRootView style={{ flex: 1 }}>
-		<Tabs
-			screenOptions={{
-				headerShown: false,
-				tabBarShowLabel: false,
-				tabBarActiveTintColor: "rgb(29, 155, 240)",
-			}}
-		>
-			<Tabs.Screen
-				name="(index)"
-				options={{
-					title: "Home",
-					tabBarIcon: makeIcon(
-						"home",
-						"home-active",
-					),
+export default App
+
+const LayoutApp = () => {
+	const { authStatus } = useAuthenticator((context) => [context.authStatus])
+	const [renderAuth, setRenderAuth] = React.useState<"signIn" | "signUp" | undefined>(undefined)
+	const { route, toSignIn, toSignUp } = useAuthenticator((context) => [context.route])
+
+	React.useEffect(() => {
+		if (![authStatus, route].includes("authenticated")) {
+			return
+		}
+		setRenderAuth(undefined)
+
+		currentAuthenticatedUser()
+	}, [route, authStatus])
+
+	return (
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<Tabs
+				screenOptions={{
+					headerShown: false,
+					tabBarShowLabel: false,
+					tabBarActiveTintColor: "rgb(29, 155, 240)",
 				}}
-			/>
-			<Tabs.Screen
-				name="(search)"
-				options={{
-					title: "Search",
-					tabBarIcon: makeIcon(
-						"explore",
-						"explore-active",
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="(profile)"
-				options={{
-					title: "Profile",
-					tabBarIcon: makeIcon(
-						"profile",
-						"profile-active",
-					),
-				}}
-			/>
-		</Tabs>
-	</GestureHandlerRootView>
-);
+			>
+				<Tabs.Screen
+					name="(index)"
+					options={{
+						title: "Home",
+						tabBarIcon: makeIcon("home", "home-active"),
+					}}
+				/>
+				<Tabs.Screen
+					name="(search)"
+					options={{
+						title: "Search",
+						tabBarIcon: makeIcon("explore", "explore-active"),
+					}}
+				/>
+				{[authStatus, route].includes("authenticated") && (
+					<Tabs.Screen
+						name="(profile)"
+						options={{
+							title: "Profile",
+							tabBarIcon: makeIcon("profile", "profile-active"),
+						}}
+					/>
+				)}
+				<Tabs.Screen
+					name="(login)"
+					options={{
+						title: "Login",
+						tabBarIcon: makeIcon("profile", "profile"),
+					}}
+				/>
+			</Tabs>
+		</GestureHandlerRootView>
+	)
+}
