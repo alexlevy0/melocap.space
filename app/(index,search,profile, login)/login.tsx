@@ -161,7 +161,7 @@ function Login() {
 								level={6}
 								fontWeight="bold"
 							>
-								Real-Time Collaborative AI Video Editing in the Cloud
+								La Mélo
 							</Heading>
 						</Flex>
 						<Flex
