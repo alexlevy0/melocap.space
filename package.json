@@ -40,8 +40,12 @@
 		"@react-native-picker/picker": "2.7.5",
 		"@react-native-segmented-control/segmented-control": "2.5.2",
 		"@react-navigation/native": "6.1.18",
+		"@react-three/drei": "9.112.0",
+		"@react-three/fiber": "8.17.7",
+		"@react-three/xr": "6.2.7",
 		"@shopify/react-native-skia": "1.2.3",
 		"@tamagui/avatar": "1.108.2",
+		"@tamagui/babel-plugin": "1.110.2",
 		"@tamagui/button": "1.108.2",
 		"@tamagui/cli": "1.108.2",
 		"@tamagui/config": "1.108.2",
@@ -61,6 +65,7 @@
 		"@tamagui/themes": "1.108.2",
 		"@tamagui/toast": "1.108.2",
 		"@types/react": "~18.2.45",
+		"@types/three": "0.168.0",
 		"aws-amplify": "6.5.1",
 		"aws-lambda": "1.0.7",
 		"expo": "~51.0.25",
@@ -128,6 +133,7 @@
 		"react-native-vision-camera": "4.5.1",
 		"react-native-web": "~0.19.10",
 		"tamagui": "1.108.2",
+		"three": "0.168.0",
 		"typescript": "5.5.4"
 	},
 	"devDependencies": {
