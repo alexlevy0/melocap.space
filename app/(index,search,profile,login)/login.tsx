@@ -1,7 +1,6 @@
 "use client"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 
-import { Feed } from "@/app/components/feed"
 import { posts } from "@/app/data"
 import {
 	AccountSettings,
@@ -13,13 +12,10 @@ import {
 	Flex,
 	Grid,
 	Heading,
-	Loader,
 	Menu,
 	MenuItem,
-	ThemeProvider,
-	defaultDarkModeOverride,
 	useAuthenticator,
-	useTheme,
+	useTheme
 } from "@aws-amplify/ui-react"
 import { getCurrentUser, signOut } from "aws-amplify/auth"
 import React from "react"

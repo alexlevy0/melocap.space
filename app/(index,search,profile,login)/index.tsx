@@ -3,7 +3,7 @@ import Head from "expo-router/head"
 import "react-native-reanimated";
 
 import { Feed } from "@/app/components/feed"
-// import { FeedAnimated } from "@/app/components/feedAnimated"
+import { FeedAnimated } from "@/app/components/feedAnimated"
 import { posts } from "@/app/data"
 
 export default function Home() {
