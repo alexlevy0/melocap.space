@@ -3,8 +3,6 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 
 import { Feed } from "@/app/components/feed"
 import { posts } from "@/app/data"
-import React from "react"
-import { signOut, getCurrentUser } from "aws-amplify/auth"
 import {
 	AccountSettings,
 	Authenticator,
@@ -23,6 +21,8 @@ import {
 	useAuthenticator,
 	useTheme,
 } from "@aws-amplify/ui-react"
+import { getCurrentUser, signOut } from "aws-amplify/auth"
+import React from "react"
 
 export default function LoginMain() {
 	return (
@@ -120,8 +120,8 @@ function Login() {
 			// )
 			<Flex flex={1} width={"100%"}>
 				<Button variation="primary" loadingText="" onClick={() => signOut()}>
-						Cancel
-					</Button>
+					Cancel
+				</Button>
 			</Flex>
 		)
 	}
@@ -141,149 +141,206 @@ function Login() {
 					},
 				}}
 			/>
-			<Authenticator.Provider>
-				<Grid
-					style={{ height: "100vh" }}
-					columnGap={{ base: "0rem", large: "0.5rem" }}
-					rowGap="0.5rem"
-					templateColumns={{ base: "0fr 1fr", large: ".2fr 1fr" }}
-					templateRows=".3fr 3.6fr .1fr"
-				>
-					<Card columnStart="1" columnEnd="-1" display="flex">
-						<Flex flex={1} alignContent="center" alignItems="center" justifyContent="flex-start">
-							<Heading color={"#e8e6e3"} level={3} fontWeight="bold">
-								Melo
-							</Heading>
-							<Heading
-								display={{ base: "none", large: "block" }}
-								// width={'100%'}
-								color={"#e8e6e3"}
-								level={6}
-								fontWeight="bold"
-							>
-								La Mélo
-							</Heading>
-						</Flex>
-						<Flex
-							// flex={1}
-							alignContent="center"
-							alignItems="center"
-							justifyContent="flex-end"
-						>
-							{authStatus === "authenticated" ? (
-								<>
-									<Button loadingText="" onClick={goSignIn}>
-										Dashboard
-									</Button>
-									<Button loadingText="" onClick={upgrade}>
-										Upgrade
-									</Button>
-									<Menu size="large" menuAlign="end">
-										<MenuItem onClick={() => alert("Download")}>
-											My Projects
-										</MenuItem>
-										<MenuItem isDisabled onClick={() => alert("Create a Copy")}>
-											My Team
-										</MenuItem>
-										<MenuItem onClick={() => alert("Create a Copy")}>
-											Usage
-										</MenuItem>
-										<MenuItem onClick={upgrade}>Upgrade</MenuItem>
-										<Divider />
-										<MenuItem onClick={displayAccountSettings}>
-											Account Settings
-										</MenuItem>
-										<MenuItem onClick={() => signOut()}>Logout</MenuItem>
-									</Menu>
-								</>
-							) : (
-								<>
-									<Button
-										loadingText=""
-										onClick={goSignIn}
-										display={{ base: "none", large: "flex" }}
-									>
-										Login
-									</Button>
-									<Button
-										display={{ base: "none", large: "flex" }}
-										loadingText=""
-										onClick={goSignUp}
-									>
-										Sign Up
-									</Button>
-									<Menu menuAlign="end" size="large">
-										<MenuItem onClick={() => setShowFeatures(true)}>
-											Features
-										</MenuItem>
-										<MenuItem onClick={displayAccountSettings}>API</MenuItem>
-										<MenuItem onClick={upgrade}>Upgrade</MenuItem>
-										<Divider />
-										<MenuItem onClick={goSignIn}>Login</MenuItem>
-										<MenuItem onClick={goSignUp}>Sign Up</MenuItem>
-									</Menu>
-								</>
-							)}
-						</Flex>
-					</Card>
-					<Card columnStart="1" columnEnd="2" variation="elevated" display={{ base: "none", large: "block" }}>
-						{/* <Clip /> */}
-					</Card>
-					<Card
-						borderRadius={{ base: "0px", large: "20px" }}
-						marginRight={{ base: "0rem", large: "0.5rem" }}
-						columnStart="2"
-						columnEnd="-1"
-						display="flex"
+			{true ?? (
+				<Authenticator.Provider>
+					<Grid
+						style={{ height: "100vh" }}
+						columnGap={{ base: "0rem", large: "0.5rem" }}
+						rowGap="0.5rem"
+						templateColumns={{ base: "0fr 1fr", large: ".2fr 1fr" }}
+						templateRows=".3fr 3.6fr .1fr"
 					>
-						{renderDashboard()}
-						{!!renderAuth && authStatus !== "authenticated" && (
-							<Authenticator
-								hideSignUp={renderAuth === "signIn"}
-								loginMechanisms={["email"]}
-								signUpAttributes={["email"]}
-								variation="modal"
-								initialState={renderAuth}
-								socialProviders={["google"]}
-								services={{
-									async validateCustomSignUp(formData) {
-										if (
-											Object.keys(formData).length >= 3 &&
-											!formData.acknowledgement
-										) {
-											return {
-												acknowledgement:
-													"You must agree to the Terms & Conditions",
+						<Card columnStart="1" columnEnd="-1" display="flex">
+							<Flex
+								flex={1}
+								alignContent="center"
+								alignItems="center"
+								justifyContent="flex-start"
+							>
+								<Heading color={"#e8e6e3"} level={3} fontWeight="bold">
+									Melo
+								</Heading>
+								<Heading
+									display={{ base: "none", large: "block" }}
+									// width={'100%'}
+									color={"#e8e6e3"}
+									level={6}
+									fontWeight="bold"
+								>
+									La
+								</Heading>
+							</Flex>
+							<Flex
+								// flex={1}
+								alignContent="center"
+								alignItems="center"
+								justifyContent="flex-end"
+							>
+								{authStatus === "authenticated" ? (
+									<>
+										<Button loadingText="" onClick={goSignIn}>
+											Dashboard
+										</Button>
+										<Button loadingText="" onClick={upgrade}>
+											Upgrade
+										</Button>
+										<Menu size="large" menuAlign="end">
+											<MenuItem onClick={() => alert("Download")}>
+												My Projects
+											</MenuItem>
+											<MenuItem
+												isDisabled
+												onClick={() => alert("Create a Copy")}
+											>
+												My Team
+											</MenuItem>
+											<MenuItem onClick={() => alert("Create a Copy")}>
+												Usage
+											</MenuItem>
+											<MenuItem onClick={upgrade}>Upgrade</MenuItem>
+											<Divider />
+											<MenuItem onClick={displayAccountSettings}>
+												Account Settings
+											</MenuItem>
+											<MenuItem onClick={() => signOut()}>
+												Logout
+											</MenuItem>
+										</Menu>
+									</>
+								) : (
+									<>
+										<Button
+											loadingText=""
+											onClick={goSignIn}
+											display={{ base: "none", large: "flex" }}
+										>
+											Login
+										</Button>
+										<Button
+											display={{ base: "none", large: "flex" }}
+											loadingText=""
+											onClick={goSignUp}
+										>
+											Sign Up
+										</Button>
+										<Menu menuAlign="end" size="large">
+											<MenuItem onClick={() => setShowFeatures(true)}>
+												Features
+											</MenuItem>
+											<MenuItem onClick={displayAccountSettings}>
+												API
+											</MenuItem>
+											<MenuItem onClick={upgrade}>Upgrade</MenuItem>
+											<Divider />
+											<MenuItem onClick={goSignIn}>Login</MenuItem>
+											<MenuItem onClick={goSignUp}>Sign Up</MenuItem>
+										</Menu>
+									</>
+								)}
+							</Flex>
+						</Card>
+						<Card
+							columnStart="1"
+							columnEnd="2"
+							variation="elevated"
+							display={{ base: "none", large: "block" }}
+						>
+							{false ?? null}
+						</Card>
+						<Card
+							borderRadius={{ base: "0px", large: "20px" }}
+							marginRight={{ base: "0rem", large: "0.5rem" }}
+							columnStart="2"
+							columnEnd="-1"
+							display="flex"
+						>
+							{renderDashboard()}
+							{!!renderAuth && authStatus !== "authenticated" && (
+								<Authenticator
+									hideSignUp={renderAuth === "signIn"}
+									loginMechanisms={["email"]}
+									signUpAttributes={["email"]}
+									variation="modal"
+									initialState={renderAuth}
+									socialProviders={["google"]}
+									services={{
+										async validateCustomSignUp(formData) {
+											if (
+												Object.keys(formData).length >= 3 &&
+												!formData.acknowledgement
+											) {
+												return {
+													acknowledgement:
+														"You must agree to the Terms & Conditions",
+												}
 											}
-										}
-									},
-								}}
-								components={{
-									SignIn: {
-										Footer() {
-											return (
-												<>
-													<Flex
-														paddingRight={
-															tokens.components
-																.authenticator
-																.form
-																.padding
-														}
-														paddingLeft={
-															tokens.components
-																.authenticator
-																.form
-																.padding
-														}
-														paddingBottom={
-															tokens.components
-																.button
-																.paddingBlockEnd
-														}
-													>
+										},
+									}}
+									components={{
+										SignIn: {
+											Footer() {
+												return (
+													<>
+														<Flex
+															paddingRight={
+																tokens
+																	.components
+																	.authenticator
+																	.form
+																	.padding
+															}
+															paddingLeft={
+																tokens
+																	.components
+																	.authenticator
+																	.form
+																	.padding
+															}
+															paddingBottom={
+																tokens
+																	.components
+																	.button
+																	.paddingBlockEnd
+															}
+														>
+															<Button
+																isFullWidth
+																variation="link"
+																onClick={() =>
+																	setRenderAuth(
+																		undefined,
+																	)
+																}
+															>
+																Cancel
+															</Button>
+														</Flex>
+														<Authenticator.SignIn.Footer />
+													</>
+												)
+											},
+										},
+										SignUp: {
+											FormFields() {
+												const {
+													validationErrors,
+												} = useAuthenticator()
+												return (
+													<>
+														<Authenticator.SignUp.FormFields />
+														<CheckboxField
+															color={"white"}
+															errorMessage={
+																validationErrors.acknowledgement as string
+															}
+															hasError={
+																!!validationErrors.acknowledgement
+															}
+															name="acknowledgement"
+															value="yes"
+															label="I agree with the Terms & Conditions"
+														/>
 														<Button
-															isFullWidth
 															variation="link"
 															onClick={() =>
 																setRenderAuth(
@@ -293,53 +350,20 @@ function Login() {
 														>
 															Cancel
 														</Button>
-													</Flex>
-													<Authenticator.SignIn.Footer />
-												</>
-											)
+													</>
+												)
+											},
 										},
-									},
-									SignUp: {
-										FormFields() {
-											const { validationErrors } = useAuthenticator()
-											return (
-												<>
-													<Authenticator.SignUp.FormFields />
-													<CheckboxField
-														color={"white"}
-														errorMessage={
-															validationErrors.acknowledgement as string
-														}
-														hasError={
-															!!validationErrors.acknowledgement
-														}
-														name="acknowledgement"
-														value="yes"
-														label="I agree with the Terms & Conditions"
-													/>
-													<Button
-														variation="link"
-														onClick={() =>
-															setRenderAuth(
-																undefined,
-															)
-														}
-													>
-														Cancel
-													</Button>
-												</>
-											)
-										},
-									},
-								}}
-							/>
-						)}
-					</Card>
-					<Card columnStart="1" columnEnd="-1">
-						Footer
-					</Card>
-				</Grid>
-			</Authenticator.Provider>
+									}}
+								/>
+							)}
+						</Card>
+						<Card columnStart="1" columnEnd="-1">
+							Footer
+						</Card>
+					</Grid>
+				</Authenticator.Provider>
+			)}
 		</>
 	)
 }
