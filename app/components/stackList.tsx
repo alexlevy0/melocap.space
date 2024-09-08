@@ -20,8 +20,8 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 
-import {CustomBlurView} from "@/app/components/CustomBlurView";
-import { DATA } from "@/app/data"
+import { CustomBlurView } from "@/app/components/CustomBlurView";
+import { DATA } from "@/app/data";
 import type { GROUP, SubGroupRenderTypes } from "@/types";
 
 import { Ionicons } from "@expo/vector-icons";
@@ -30,8 +30,6 @@ import { StatusBar } from "expo-status-bar";
 
 const ITEM_HEIGHT = 80;
 const GAP = 8;
-
-
 
 const SubGroupRender = ({ val, i, isSubGroups }: SubGroupRenderTypes) => {
 	const theme = useTheme();
@@ -176,12 +174,12 @@ const RenderItem = ({
 				</Text>
 				<Text
 					style={[
-						// styles.desc,
-						// {
-						// 	color: theme.colors
-						// 		.text,
-						// 	opacity: 0.6,
-						// },
+						styles.desc,
+						{
+							color: theme.colors
+								.text,
+							opacity: 0.6,
+						},
 					]}
 				>
 					{item.description}
@@ -224,7 +222,7 @@ const RenderItem = ({
 	);
 };
 
-const Main = () => {
+export const Main = () => {
 	const bottomPadding = useSharedValue(0);
 	const headerHeight = useHeaderHeight();
 
@@ -273,8 +271,6 @@ const Main = () => {
 		</View>
 	);
 };
-
-export default Main;
 
 const styles = StyleSheet.create({
 	container: {

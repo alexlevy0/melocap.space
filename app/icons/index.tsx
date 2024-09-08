@@ -12,7 +12,7 @@ const IconButton: React.FC<ButtonProps> = ({ icon, onPress }) => (
 	</TouchableOpacity>
 );
 
-const SocialButtons: React.FC = () => {
+export const SocialButtons: React.FC = () => {
 	return (
 		<View style={styles.container}>
 			<IconButton
@@ -43,5 +43,3 @@ const styles = StyleSheet.create({
 		marginHorizontal: 8,
 	},
 });
-
-export default SocialButtons;

@@ -1,4 +1,4 @@
-import { DATA } from "@/app/data"
+import { DATA } from "@/app/data";
 // import { CustomBlurView } from "@/components/CustomBlurView";
 import type { GROUP, SubGroupRenderTypes } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,10 +25,10 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 
-import { BlurView } from "expo-blur"
+import { BlurView } from "expo-blur";
 
 export const CustomBlurView = () => {
-	const tint = useColorScheme()
+	const tint = useColorScheme();
 	return (
 		<BlurView
 			tint={Platform.select({
@@ -39,9 +39,8 @@ export const CustomBlurView = () => {
 			intensity={100}
 			style={StyleSheet.absoluteFillObject}
 		/>
-	)
-}
-
+	);
+};
 
 const ITEM_HEIGHT = 80;
 const GAP = 8;
@@ -292,49 +291,48 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	contentContainer: {
-	  gap: GAP,
-	  margin: 20,
-	  paddingBottom: 20,
+		gap: GAP,
+		margin: 20,
+		paddingBottom: 20,
 	},
 	bgImage: {
-	  ...StyleSheet.absoluteFillObject,
-	  zIndex: -1,
+		...StyleSheet.absoluteFillObject,
+		zIndex: -1,
 	},
 	groupListItem: {
-	  height: ITEM_HEIGHT,
-	  justifyContent: "center",
-	  paddingHorizontal: 15,
-	  borderRadius: 10,
-	  overflow: "hidden",
+		height: ITEM_HEIGHT,
+		justifyContent: "center",
+		paddingHorizontal: 15,
+		borderRadius: 10,
+		overflow: "hidden",
 	},
 	subGroupWrapper: {
-	  position: "relative",
-	  width: "100%",
+		position: "relative",
+		width: "100%",
 	},
 	cardShadow: {
-	  shadowColor: "#000",
-	  shadowOffset: {
-	    width: 0,
-	    height: 0,
-	  },
-	  shadowOpacity: 0.1,
-	  shadowRadius: 5,
-	  elevation: 5,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 0,
+		},
+		shadowOpacity: 0.1,
+		shadowRadius: 5,
+		elevation: 5,
 	},
 	title: {
-	  fontSize: 15,
-	  fontWeight: "600",
+		fontSize: 15,
+		fontWeight: "600",
 	},
 	desc: {
-	  marginTop: 2,
-	  fontSize: 15,
-	  fontWeight: "500",
+		marginTop: 2,
+		fontSize: 15,
+		fontWeight: "500",
 	},
 	chevronIcon: {
-	  position: "absolute",
-	  top: 5,
-	  right: 5,
-	  opacity: 0.8,
+		position: "absolute",
+		top: 5,
+		right: 5,
+		opacity: 0.8,
 	},
-      });
-      
+});

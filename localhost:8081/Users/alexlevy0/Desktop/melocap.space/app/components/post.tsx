@@ -1,6 +1,6 @@
-import { useTheme } from "@react-navigation/native";
 import { Link, useRouter, useSegments } from "expo-router";
 import { Image, Pressable, Text, View, useColorScheme } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 import type { Post } from "@/app/data";
 type Group<T extends string> = `(${T})`;
@@ -11,6 +11,9 @@ export function PostCmp({ item }: { item: Post }) {
 	const [segment] = useSegments() as [SharedSegment];
 	const router = useRouter();
 	const theme = useTheme();
+	const colorScheme = useColorScheme();
+	console.log("->theme", { theme });
+	console.log("->colorScheme---", { colorScheme });
 	return (
 		<Pressable
 			onPress={() => {
@@ -76,14 +79,10 @@ export function PostCmp({ item }: { item: Post }) {
 									hovered,
 								}) => (
 									<Text
-										selectable
 										style={[
 											{
 												fontWeight: "bold",
 												fontSize: 16,
-												color: theme
-													.colors
-													.text,
 											},
 											hovered && {
 												textDecorationLine:
@@ -102,16 +101,7 @@ export function PostCmp({ item }: { item: Post }) {
 							</Pressable>
 						</Link>
 
-						<Text
-							selectable
-							style={[
-								{
-									color: theme
-										.colors
-										.text,
-								},
-							]}
-						>
+						<Text selectable>
 							{item.post}
 						</Text>
 					</View>
