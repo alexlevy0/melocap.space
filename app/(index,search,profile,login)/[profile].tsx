@@ -12,6 +12,7 @@ import { Button } from "@tamagui/button";
 import { YStack } from "@tamagui/stacks";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useAuthenticator } from "@aws-amplify/ui-react-native";
+import { goldenRatio } from "../utils";
 
 // Run in Node.js environments at build time to generate a list of
 // pages that should be statically generated.
@@ -108,18 +109,17 @@ export function ProfileScreen({ profile }: { profile: string }) {
 					title: "Profile",
 					// headerTitle: props => <LogoTitle {...props} />,
 					headerRight: () => (
-						<YStack padding="$3" gap="$3">
-							<Button
-								onPress={
-									onPress
-								}
-								size="$3"
-								variant="outlined"
-								icon={
-									MoreVertical
-								}
-							/>
-						</YStack>
+						<Button
+							style={{
+								borderWidth: 0,
+								backgroundColor:
+									"transparent",
+							}}
+							onPress={onPress}
+							size="$4"
+							scaleIcon={goldenRatio}
+							icon={MoreVertical}
+						/>
 					),
 				}}
 			/>
