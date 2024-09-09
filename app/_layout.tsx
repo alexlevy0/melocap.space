@@ -255,6 +255,16 @@ const LayoutApp = () => {
 						),
 					}}
 				/>
+				<Tabs.Screen
+					name="(login)"
+					options={{
+						title: "Login",
+						tabBarIcon: makeIcon(
+							"share",
+							"profile",
+						),
+					}}
+				/>
 				{[authStatus, route].includes(
 					"authenticated",
 				) && (
@@ -269,16 +279,6 @@ const LayoutApp = () => {
 						}}
 					/>
 				)}
-				<Tabs.Screen
-					name="(login)"
-					options={{
-						title: "Login",
-						tabBarIcon: makeIcon(
-							"profile",
-							"profile",
-						),
-					}}
-				/>
 			</Tabs>
 		</GestureHandlerRootView>
 	);
