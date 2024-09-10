@@ -34,4 +34,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 		["expo-router", { origin: process.env.EXPO_PUBLIC_EXPO_ROUTER_ORIGIN || '' }],
 		"expo-splash-screen",
 	],
+    	extra: {
+      		"eas": {
+        		"projectId": "be5ba0c1-5452-4aca-b6a5-fa9dbbf1ca16"
+      	},
+  }
 });

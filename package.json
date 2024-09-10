@@ -99,7 +99,7 @@
 		"expo-localization": "~15.0.3",
 		"expo-location": "~17.0.1",
 		"expo-network": "~6.0.1",
-		"expo-notifications": "~0.28.15",
+		"expo-notifications": "~0.28.16",
 		"expo-print": "~13.0.1",
 		"expo-quick-actions": "2.0.0",
 		"expo-router": "~3.5.21",
