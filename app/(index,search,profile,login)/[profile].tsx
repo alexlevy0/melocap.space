@@ -72,7 +72,8 @@ export function ProfileScreen({ profile }: { profile: string }) {
 							signOut();
 							return;
 						}
-						signIn();
+						// TODO Redirect to auth
+						// signIn();
 						return;
 
 					case cancelButtonIndex:
