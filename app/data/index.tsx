@@ -1,10 +1,10 @@
-import { Platform } from "react-native"
+import { Platform } from "react-native";
 
 export const users = [
 	{
 		user: "melody_master",
 		name: "Melody Master",
-		image: `https://thispersondoesnotexist.com?${Math.random()}`,
+		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "Music enthusiast and top predictor. I live and breathe the charts!",
 		url: "https://melodymaster.com",
 		followers: 15300,
@@ -12,7 +12,7 @@ export const users = [
 	{
 		user: "chart_champion",
 		name: "Chart Champion",
-		image: `https://thispersondoesnotexist.com?${Math.random()}`,
+		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "Industry insider with a knack for spotting the next big hit.",
 		url: "http://chartchampion.com/",
 		followers: 12452,
@@ -20,7 +20,7 @@ export const users = [
 	{
 		user: "beat_predictor",
 		name: "Beat Predictor",
-		image: `https://thispersondoesnotexist.com?${Math.random()}`,
+		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "Data analyst by day, music trend forecaster by night. Let the numbers guide you!",
 		url: "https://beatpredictor.com/",
 		followers: 18759,
@@ -28,7 +28,7 @@ export const users = [
 	{
 		user: "rhythm_guru",
 		name: "Rhythm Guru",
-		image: `https://thispersondoesnotexist.com?${Math.random()}`,
+		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "DJ and music producer. I know what makes a track climb the charts.",
 		url: "https://www.rhythmguru.com/",
 		followers: 9500,
@@ -36,7 +36,7 @@ export const users = [
 	{
 		user: "hitmaker",
 		name: "HitMaker",
-		image: `https://thispersondoesnotexist.com?${Math.random()}`,
+		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "The official account of HitMaker, the #1 music betting game. Predict, bet, win!",
 		url: "https://hitmaker.com",
 		followers: 50604,
@@ -46,25 +46,25 @@ export const users = [
 		return {
 			...value,
 			image: window.location + value.image,
-		}
+		};
 	}
-	return value
-})
+	return value;
+});
 
 export type Post = {
 	user: {
-		user: string
-		name: string
-		image: string
-		followers: number
-		url: string
-		bio: string
-	}
-	post: string
-	id: string
-}
+		user: string;
+		name: string;
+		image: string;
+		followers: number;
+		url: string;
+		bio: string;
+	};
+	post: string;
+	id: string;
+};
 
-export const posts = ([
+export const posts = [
 	{
 		user: "melody_master",
 		post: "Just placed my bet on 'Neon Dreams' to hit top 10 next week. Who's with me?",
@@ -149,28 +149,28 @@ export const posts = ([
 	...v,
 	id,
 	user: users.find((u) => u.user === v.user),
-})) as unknown) as Post[]
-
+})) as unknown as Post[];
 
 export const DATA = [
 	{
 		id: "1a2b3c4d",
 		name: "Tech Innovators",
-		description: "We are discussing the latest in technology and innovation.",
-		image:
-			"https://img.freepik.com/free-photo/man-with-vr-glasses-experiencing-metaverse_23-2150904679.jpg?size=626&ext=jpg&ga=GA1.1.553209589.1714953600&semt=ais",
+		description:
+			"We are discussing the latest in technology and innovation.",
+		image: "https://img.freepik.com/free-photo/man-with-vr-glasses-experiencing-metaverse_23-2150904679.jpg?size=626&ext=jpg&ga=GA1.1.553209589.1714953600&semt=ais",
 		subGroups: [
 			{
 				id: "1a2b3c4d1",
 				name: "AI Enthusiasts",
 				description: "AI tricks and tips.",
-				image: "https://picsum.photos/200/300?random=2",
+				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
 				id: "1a2b3c4d2",
 				name: "Blockchain Pioneers",
-				description: "Join for iscussions on blockchain technology.",
-				image: "https://picsum.photos/200/300?random=2",
+				description:
+					"Join for iscussions on blockchain technology.",
+				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 		],
 	},
@@ -192,26 +192,27 @@ export const DATA = [
 		id: "2b3c4d5e",
 		name: "Fitness Freaks",
 		description: "Only fitness enthusiasts.",
-		image: "https://picsum.photos/200/300?random=2",
+		image: "https://picsum.photos/seed/696/3000/2000",
 		subGroups: [],
 	},
 	{
 		id: "5e6f7g8h",
 		name: "Foodies United",
-		description: "This group for food lovers to share recipes and reviews.",
-		image: "https://picsum.photos/200/300?random=2",
+		description:
+			"This group for food lovers to share recipes and reviews.",
+		image: "https://picsum.photos/seed/696/3000/2000",
 		subGroups: [
 			{
 				id: "5e6f7g8h1",
 				name: "Vegan Delights",
 				description: "Vegan recipes",
-				image: "https://picsum.photos/200/300?random=2",
+				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
 				id: "5e6f7g8h2",
 				name: "Dessert Lovers",
 				description: "Best Dessert recipes.",
-				image: "https://picsum.photos/200/300?random=2",
+				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 		],
 	},
@@ -226,19 +227,19 @@ export const DATA = [
 		id: "6f7g8h9i",
 		name: "Music Maniacs",
 		description: "Join us to connect with fellow music enthusiasts",
-		image: "https://picsum.photos/200/300?random=2",
+		image: "https://picsum.photos/seed/696/3000/2000",
 		subGroups: [
 			{
 				id: "6f7g8h9i1",
 				name: "Rock and Roll",
 				description: "Have fun.",
-				image: "https://picsum.photos/200/300?random=2",
+				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
 				id: "6f7g8h9i2",
 				name: "Classical Harmony",
 				description: "Millenial",
-				image: "https://picsum.photos/200/300?random=2",
+				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
 				id: "6f7g8h9i3",
@@ -248,4 +249,4 @@ export const DATA = [
 			},
 		],
 	},
-]
+];

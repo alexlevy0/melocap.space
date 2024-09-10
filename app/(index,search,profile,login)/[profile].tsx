@@ -1,6 +1,7 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import Head from "expo-router/head";
-import { Image, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { Image } from 'expo-image';
 import { ScrollView } from "react-native-gesture-handler";
 import { Activity, Airplay, MoreVertical } from "@tamagui/lucide-icons";
 import { useTheme } from "@react-navigation/native";
@@ -136,9 +137,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 						}}
 					>
 						<Image
-							source={{
-								uri: user.image,
-							}}
+							source={user.image}
 							style={{
 								width: 64,
 								height: 64,

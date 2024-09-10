@@ -1,6 +1,7 @@
 import { useTheme } from "@react-navigation/native";
 import { Link, useRouter, useSegments } from "expo-router";
-import { Image, Pressable, Text, View, useColorScheme } from "react-native";
+import { Pressable, Text, View, useColorScheme } from "react-native";
+import { Image } from "expo-image";
 
 import type { Post } from "@/app/data";
 type Group<T extends string> = `(${T})`;
@@ -47,9 +48,7 @@ export function PostCmp({ item }: { item: Post }) {
 					]}
 				>
 					<Image
-						source={{
-							uri: item.user.image,
-						}}
+						source={item.user.image}
 						style={{
 							width: 48,
 							height: 48,
