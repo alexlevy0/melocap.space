@@ -117,6 +117,7 @@
 		"expo-tracking-transparency": "~4.0.2",
 		"expo-video": "1.2.4",
 		"expo-web-browser": "~13.0.3",
+		"leva": "0.9.35",
 		"lottie-react-native": "6.7.0",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
