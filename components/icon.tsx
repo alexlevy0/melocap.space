@@ -22,11 +22,7 @@ export function Icon({
 	height: number;
 }) {
 	const Comp = React.useMemo(() => {
-		// return null
-		// console.log({ name })
-		// console.log({ icons })
 		const imp = icons(`./${name}.svg`);
-		console.log({ imp });
 		if (!imp) {
 			throw new Error(
 				`Icon not found: ${name}. Options: ${icons

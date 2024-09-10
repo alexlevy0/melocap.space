@@ -78,7 +78,6 @@ export function PostCmp({ item }: { item: Post }) {
 									hovered,
 								}) => (
 									<Text
-										selectable
 										style={[
 											{
 												fontWeight: "bold",
@@ -105,7 +104,6 @@ export function PostCmp({ item }: { item: Post }) {
 						</Link>
 
 						<Text
-							selectable
 							style={[
 								{
 									color: theme
