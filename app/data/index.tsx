@@ -7,7 +7,7 @@ export const users = [
 		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "Music enthusiast and top predictor. I live and breathe the charts!",
 		url: "https://melodymaster.com",
-		followers: 15300,
+		followers: 1530,
 	},
 	{
 		user: "chart_champion",
@@ -15,7 +15,7 @@ export const users = [
 		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "Industry insider with a knack for spotting the next big hit.",
 		url: "http://chartchampion.com/",
-		followers: 12452,
+		followers: 1240,
 	},
 	{
 		user: "beat_predictor",
@@ -23,7 +23,7 @@ export const users = [
 		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "Data analyst by day, music trend forecaster by night. Let the numbers guide you!",
 		url: "https://beatpredictor.com/",
-		followers: 18759,
+		followers: 1875,
 	},
 	{
 		user: "rhythm_guru",
@@ -31,7 +31,7 @@ export const users = [
 		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "DJ and music producer. I know what makes a track climb the charts.",
 		url: "https://www.rhythmguru.com/",
-		followers: 9500,
+		followers: 950,
 	},
 	{
 		user: "hitmaker",
@@ -39,7 +39,7 @@ export const users = [
 		image: "https://picsum.photos/seed/696/3000/2000",
 		bio: "The official account of HitMaker, the #1 music betting game. Predict, bet, win!",
 		url: "https://hitmaker.com",
-		followers: 50604,
+		followers: 5064,
 	},
 ].map((value) => {
 	if (Platform.OS !== "web") {

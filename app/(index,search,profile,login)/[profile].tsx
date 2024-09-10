@@ -1,7 +1,7 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import Head from "expo-router/head";
 import { Text, View } from "react-native";
-import { Image } from 'expo-image';
+import { Image } from "expo-image";
 import { ScrollView } from "react-native-gesture-handler";
 import { Activity, Airplay, MoreVertical } from "@tamagui/lucide-icons";
 import { useTheme } from "@react-navigation/native";
@@ -104,11 +104,22 @@ export function ProfileScreen({ profile }: { profile: string }) {
 					content={user.image}
 				/>
 			</Head>
-			{/* <Stack.Screen options={{ title: "Profile" }} /> */}
+			<Stack.Screen options={{ title: "Profile" }} />
 			<Stack.Screen
 				options={{
 					title: "Profile",
-					// headerTitle: props => <LogoTitle {...props} />,
+					headerTitle: (props) => (
+						<Text
+							style={{
+								color: theme
+									.colors
+									.text,
+							}}
+							{...props}
+						>
+							MeloCap
+						</Text>
+					),
 					headerRight: () => (
 						<Button
 							style={{
@@ -137,7 +148,10 @@ export function ProfileScreen({ profile }: { profile: string }) {
 						}}
 					>
 						<Image
-							source={user.image}
+							// source={user.image}
+							source={
+								"https://picsum.photos/seed/696/3000/2000"
+							}
 							style={{
 								width: 64,
 								height: 64,
@@ -195,27 +209,81 @@ export function ProfileScreen({ profile }: { profile: string }) {
 									"",
 								)}
 						</Link>
-						<Text
+						<View
 							style={{
-								fontSize: 16,
-								fontWeight: "bold",
-								color: theme
-									.colors
-									.text,
+								flexDirection:
+									"row",
+								flex: 1,
+								// borderWidth: 1,
+								justifyContent:
+									"space-around",
 							}}
 						>
-							{user.followers}{" "}
 							<Text
 								style={{
-									opacity: 0.6,
+									fontSize: 16,
+									fontWeight: "bold",
 									color: theme
 										.colors
 										.text,
 								}}
 							>
-								Followers
+								{user.followers}{" "}
+								<Text
+									style={{
+										opacity: 0.6,
+										color: theme
+											.colors
+											.text,
+									}}
+								>
+									playlists
+								</Text>
 							</Text>
-						</Text>
+
+							<Text
+								style={{
+									fontSize: 16,
+									fontWeight: "bold",
+									color: theme
+										.colors
+										.text,
+								}}
+							>
+								{user.followers}{" "}
+								<Text
+									style={{
+										opacity: 0.6,
+										color: theme
+											.colors
+											.text,
+									}}
+								>
+									followers
+								</Text>
+							</Text>
+							<Text
+								style={{
+									fontSize: 16,
+									fontWeight: "bold",
+									color: theme
+										.colors
+										.text,
+								}}
+							>
+								{user.followers}{" "}
+								<Text
+									style={{
+										opacity: 0.6,
+										color: theme
+											.colors
+											.text,
+									}}
+								>
+									suivi(e)s
+								</Text>
+							</Text>
+						</View>
 					</View>
 				)}
 				data={posts.filter(
