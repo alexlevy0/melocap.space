@@ -1,5 +1,9 @@
+import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { FeatureCard } from "@/components/FeatureCard";
+import { Header } from "@/components/HeaderComponent";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import { Ionicons } from "@expo/vector-icons";
 import {
 	DarkTheme,
 	DefaultTheme,
@@ -24,10 +28,6 @@ import {
 	XStack,
 	YStack,
 } from "tamagui";
-
-import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { FeatureCard } from "@/components/FeatureCard";
-import { Header } from "@/components/HeaderComponent";
 import "@/styles/styles.module.css";
 import outputs from "@/amplify_outputs.json";
 import { makeIcon } from "@/components/icon";
@@ -256,29 +256,36 @@ const LayoutApp = () => {
 					}}
 				/>
 				<Tabs.Screen
+					name="(profile)"
+					options={{
+						title: "Profile",
+						tabBarIcon: makeIcon(
+							"profile",
+							"profile-active",
+						),
+						
+					}}
+				/>
+				<Tabs.Screen
 					name="(login)"
 					options={{
 						title: "Login",
 						tabBarIcon: makeIcon(
 							"share",
-							"profile",
+							"share",
 						),
 					}}
 				/>
-				{[authStatus, route].includes(
-					"authenticated",
-				) && (
-					<Tabs.Screen
-						name="(profile)"
-						options={{
-							title: "Profile",
-							tabBarIcon: makeIcon(
-								"profile",
-								"profile-active",
-							),
-						}}
-					/>
-				)}
+				<Tabs.Screen
+					name="(avatar)"
+					options={{
+						title: "Avatar",
+						tabBarIcon: makeIcon(
+							"share",
+							"share",
+						),
+					}}
+				/>
 			</Tabs>
 		</GestureHandlerRootView>
 	);
