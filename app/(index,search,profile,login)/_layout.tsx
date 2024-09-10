@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import Head from "expo-router/head";
 import { Platform, TouchableOpacity } from "react-native";
 import * as Share from "expo-sharing";
-import { Icon } from "@/app/components/icon";
+import { Icon } from "@/components/icon";
 
 export const unstable_settings = {
 	initialRouteName: "index",

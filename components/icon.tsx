@@ -1,6 +1,6 @@
 import React from "react";
 
-const icons = require.context("../../assets/icons", true, /\.svg$/);
+const icons = require.context("../assets/icons", true, /\.svg$/);
 
 export type IconName =
 	| "share"

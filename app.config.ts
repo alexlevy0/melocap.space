@@ -30,13 +30,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 	},
 	plugins: [
 		"expo-font",
-		// @ts-ignore Property 'EXPO_PUBLIC_EXPO_ROUTER_ORIGIN' does not exist on type 'typeof env'
+		// @ts-ignore : Property 'EXPO_PUBLIC_EXPO_ROUTER_ORIGIN' does not exist on type 'typeof env'
 		["expo-router", { origin: process.env.EXPO_PUBLIC_EXPO_ROUTER_ORIGIN || '' }],
 		"expo-splash-screen",
 	],
     	extra: {
       		"eas": {
         		"projectId": "be5ba0c1-5452-4aca-b6a5-fa9dbbf1ca16"
-      	},
-  }
+      		},
+	},
+	notification: {
+		// vapidPublicKey : "TODO",
+	}
 });

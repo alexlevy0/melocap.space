@@ -1,4 +1,4 @@
-import { DATA } from "@/app/data";
+import { DATA } from "@/data";
 // import { CustomBlurView } from "@/components/CustomBlurView";
 import type { GROUP, SubGroupRenderTypes } from "@/types";
 import { Ionicons } from "@expo/vector-icons";

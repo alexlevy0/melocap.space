@@ -20,8 +20,8 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 
-import { CustomBlurView } from "@/app/components/CustomBlurView";
-import { DATA } from "@/app/data";
+import { CustomBlurView } from "@/components/CustomBlurView";
+import { DATA } from "@/data";
 import type { GROUP, SubGroupRenderTypes } from "@/types";
 
 import { Ionicons } from "@expo/vector-icons";

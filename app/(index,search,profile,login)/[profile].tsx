@@ -1,19 +1,17 @@
+import { useAuthenticator } from "@aws-amplify/ui-react-native";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import { useTheme } from "@react-navigation/native";
+import { Button } from "@tamagui/button";
+import { MoreVertical } from "@tamagui/lucide-icons";
+import { Image } from "expo-image";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import Head from "expo-router/head";
 import { Text, View } from "react-native";
-import { Image } from "expo-image";
 import { ScrollView } from "react-native-gesture-handler";
-import { Activity, Airplay, MoreVertical } from "@tamagui/lucide-icons";
-import { useTheme } from "@react-navigation/native";
 
-import { Feed } from "@/app/components/feed";
-import { posts, users } from "@/app/data";
-import { makeIcon } from "../components/icon";
-import { Button } from "@tamagui/button";
-import { YStack } from "@tamagui/stacks";
-import { useActionSheet } from "@expo/react-native-action-sheet";
-import { useAuthenticator } from "@aws-amplify/ui-react-native";
-import { goldenRatio } from "../utils";
+import { Feed } from "@/components/feed";
+import { posts, users } from "@/data";
+import { goldenRatio } from "@/utils";
 
 // Run in Node.js environments at build time to generate a list of
 // pages that should be statically generated.
@@ -109,18 +107,6 @@ export function ProfileScreen({ profile }: { profile: string }) {
 			<Stack.Screen
 				options={{
 					title: "Profile",
-					headerTitle: (props) => (
-						<Text
-							style={{
-								color: theme
-									.colors
-									.text,
-							}}
-							{...props}
-						>
-							MeloCap
-						</Text>
-					),
 					headerRight: () => (
 						<Button
 							style={{

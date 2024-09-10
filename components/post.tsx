@@ -3,7 +3,7 @@ import { Link, useRouter, useSegments } from "expo-router";
 import { Pressable, Text, View, useColorScheme } from "react-native";
 import { Image } from "expo-image";
 
-import type { Post } from "@/app/data";
+import type { Post } from "@/data";
 type Group<T extends string> = `(${T})`;
 
 type SharedSegment = Group<"index"> | Group<"search"> | Group<"profile">;

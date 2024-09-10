@@ -1,7 +1,7 @@
 "use client"
 import { Stack, useLocalSearchParams, useRouter } from "expo-router"
 
-import { posts } from "@/app/data"
+import { posts } from "@/data"
 import {
 	AccountSettings,
 	Authenticator,

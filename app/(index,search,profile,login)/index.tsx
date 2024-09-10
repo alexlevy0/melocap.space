@@ -2,9 +2,9 @@ import { Stack } from "expo-router"
 import Head from "expo-router/head"
 import "react-native-reanimated";
 
-import { Feed } from "@/app/components/feed"
-import { FeedAnimated } from "@/app/components/feedAnimated"
-import { posts } from "@/app/data"
+import { Feed } from "@/components/feed"
+import { FeedAnimated } from "@/components/feedAnimated"
+import { posts } from "@/data"
 
 export default function Home() {
 	return (

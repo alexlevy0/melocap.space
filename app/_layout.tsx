@@ -3,10 +3,11 @@ import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import {
 	DarkTheme,
 	DefaultTheme,
-	ThemeProvider,
 	NavigationContainer,
+	ThemeProvider,
 } from "@react-navigation/native";
 import { Amplify } from "aws-amplify";
+import { getCurrentUser } from "aws-amplify/auth";
 import { BlurView } from "expo-blur";
 import { useFonts } from "expo-font";
 import { Tabs } from "expo-router";
@@ -24,15 +25,14 @@ import {
 	YStack,
 } from "tamagui";
 
-import { AnimatedBackground } from "@/app/components/AnimatedBackground";
-import { FeatureCard } from "@/app/components/FeatureCard";
-import { Header } from "@/app/components/HeaderComponent";
-import "@/app/styles/styles.module.css";
-import { getCurrentUser } from "aws-amplify/auth";
-import outputs from "./../amplify_outputs.json";
-import { tamaguiConfig } from "./../tamagui.config";
-import { makeIcon } from "./components/icon";
-import { SocialButtons } from "./icons";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { FeatureCard } from "@/components/FeatureCard";
+import { Header } from "@/components/HeaderComponent";
+import "@/styles/styles.module.css";
+import outputs from "@/amplify_outputs.json";
+import { makeIcon } from "@/components/icon";
+import { SocialButtons } from "@/icons";
+import { tamaguiConfig } from "@/tamagui.config";
 
 Amplify.configure(outputs, { ssr: true });
 

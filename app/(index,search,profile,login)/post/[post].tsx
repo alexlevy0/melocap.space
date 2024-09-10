@@ -3,8 +3,8 @@ import Head from "expo-router/head";
 import { Text } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { PostCmp } from "@/app/components/post";
-import { posts } from "@/app/data";
+import { PostCmp } from "@/components/post";
+import { posts } from "@/data";
 
 // Run in Node.js environments at build time to generate a list of
 // pages that should be statically generated.
