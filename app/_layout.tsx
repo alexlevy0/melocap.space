@@ -1,285 +1,174 @@
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
-import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
-	NavigationContainer,
-} from "@react-navigation/native";
-import { Amplify } from "aws-amplify";
-import { BlurView } from "expo-blur";
-import { useFonts } from "expo-font";
-import { Tabs } from "expo-router";
-import Head from "expo-router/head";
-import React from "react";
-import { SafeAreaView, StyleSheet, View, useColorScheme } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import {
-	Button,
-	H1,
-	H2,
-	TamaguiProvider,
-	Theme,
-	XStack,
-	YStack,
-} from "tamagui";
+import { useState, useEffect, useRef } from "react";
+import { Text, View, Button, Platform } from "react-native";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 
-import { AnimatedBackground } from "@/app/components/AnimatedBackground";
-import { FeatureCard } from "@/app/components/FeatureCard";
-import { Header } from "@/app/components/HeaderComponent";
-import "@/app/styles/styles.module.css";
-import { getCurrentUser } from "aws-amplify/auth";
-import outputs from "./../amplify_outputs.json";
-import { tamaguiConfig } from "./../tamagui.config";
-import { makeIcon } from "./components/icon";
-import { SocialButtons } from "./icons";
-
-Amplify.configure(outputs, { ssr: true });
-
-const MyTheme = {
-	...DefaultTheme,
-	colors: {
-		...DefaultTheme.colors,
-		primary: "rgb(255, 45, 85)",
-	},
-};
-
-/**
- * Main application component
- * @returns {React.ReactElement} The rendered application
- */
-const App: React.FC = () => {
-	const colorScheme = useColorScheme();
-	const [loaded] = useFonts({
-		Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-		InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
-	});
-
-	React.useEffect(() => {
-		if (loaded) {
-			// Hide splash screen here if needed
-		}
-	}, [loaded]);
-
-	if (!loaded) {
-		return null;
-	}
-	console.log({ DarkTheme });
-	return (
-		// <NavigationContainer theme={MyTheme}>
-		<ActionSheetProvider>
-			<TamaguiProvider
-				config={tamaguiConfig}
-				defaultTheme={colorScheme ?? "light"}
-			>
-				<ThemeProvider
-					value={
-						colorScheme === "dark"
-							? DarkTheme
-							: DefaultTheme
-					}
-				>
-					<Authenticator.Provider>
-						<Theme
-							name={
-								colorScheme ===
-								"dark"
-									? "dark"
-									: "light"
-							}
-						>
-							{/* <Authenticator> */}
-							<LayoutApp />
-							{/* </Authenticator> */}
-							{/* <Layout /> */}
-							{/* <LivenessQuickStartReact/> */}
-						</Theme>
-					</Authenticator.Provider>
-				</ThemeProvider>
-			</TamaguiProvider>
-		</ActionSheetProvider>
-		// </NavigationContainer>
-	);
-};
-
-/**
- * Layout component containing the main content
- * @returns {React.ReactElement} The rendered layout
- */
-const Layout: React.FC = () => {
-	const onPress = () => {
-		console.log("onPress");
-	};
-	return (
-		<SafeAreaView style={styles.container}>
-			<Head>
-				<title>MeloCaps : Sonorité d’avenir !</title>
-				<meta
-					name="description"
-					content="Tamagui - React Native UI Kit"
-				/>
-			</Head>
-			<AnimatedBackground />
-			<BlurView
-				intensity={80}
-				tint="light"
-				style={styles.blurView}
-			>
-				{/* biome-ignore lint/complexity/useArrowFunction: <explanation> */}
-				<Header
-					onPressFaceLivenessDetector={(): void => {
-						throw new Error(
-							"Function not implemented.",
-						);
-					}}
-				/>
-			</BlurView>
-
-			<YStack f={1} jc="center" ai="center" space="$4" p="$4">
-				<H1 ta="center" fow="800">
-					MeloCap
-				</H1>
-				<H2 ta="center" col="$orange10">
-					Sonorité d’avenir !
-				</H2>
-				<Button
-					size="$6"
-					theme="active"
-					br="$10"
-					onPress={onPress}
-				>
-					À vos paris, vibrez, jouez !!
-				</Button>
-				<XStack space="$4">
-					<View style={styles.container}>
-						<SocialButtons />
-					</View>
-				</XStack>
-				<XStack mt="$8" space="$8">
-					<FeatureCard
-						title="À vos Paris"
-						description="Découvrez chaque jour un nouveau thème musical et misez sur les morceaux qui capturent le mieux son essence. Entrez dans le jeu et mettez vos connaissances musicales à l'épreuve !"
-					/>
-					<FeatureCard
-						title="Misez"
-						description="Sélectionnez vos morceaux et soumettez votre playlist pour participer au défi du jour. La diversité et l'originalité de vos choix pourraient bien faire la différence !"
-					/>
-					<FeatureCard
-						title="Jouez"
-						description="Suivez votre progression dans le classement et rivalisez avec les autres participants pour décrocher la première place. Gagnez des récompenses virtuelles en démontrant votre expertise musicale !"
-					/>
-				</XStack>
-			</YStack>
-		</SafeAreaView>
-	);
-};
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	blurView: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
-		height: 60,
-	},
+Notifications.setNotificationHandler({
+	handleNotification: async () => ({
+		shouldShowAlert: true,
+		shouldPlaySound: false,
+		shouldSetBadge: false,
+	}),
 });
 
-// Placeholder icons (replace with actual implementations)
-const TwitterIcon: React.FC = () => null;
-const DiscordIcon: React.FC = () => null;
+async function sendPushNotification(expoPushToken: string) {
+	const message = {
+		to: expoPushToken,
+		sound: "default",
+		title: "Original Title",
+		body: "And here is the body!",
+		data: { someData: "goes here" },
+	};
 
-async function currentAuthenticatedUser() {
-	try {
-		const { username, userId, signInDetails } =
-			await getCurrentUser();
-		console.log(`The username: ${username}`);
-		console.log(`The userId: ${userId}`);
-		console.log(`The signInDetails: ${signInDetails}`);
-	} catch (err) {
-		console.log(err);
+	await fetch("https://exp.host/--/api/v2/push/send", {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Accept-encoding": "gzip, deflate",
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(message),
+	});
+}
+
+function handleRegistrationError(errorMessage: string) {
+	alert(errorMessage);
+	throw new Error(errorMessage);
+}
+
+async function registerForPushNotificationsAsync() {
+	if (Platform.OS === "android") {
+		Notifications.setNotificationChannelAsync("default", {
+			name: "default",
+			importance: Notifications.AndroidImportance.MAX,
+			vibrationPattern: [0, 250, 250, 250],
+			lightColor: "#FF231F7C",
+		});
+	}
+
+	if (Device.isDevice) {
+		const { status: existingStatus } =
+			await Notifications.getPermissionsAsync();
+		let finalStatus = existingStatus;
+		if (existingStatus !== "granted") {
+			const { status } =
+				await Notifications.requestPermissionsAsync();
+			finalStatus = status;
+		}
+		if (finalStatus !== "granted") {
+			handleRegistrationError(
+				"Permission not granted to get push token for push notification!",
+			);
+			return;
+		}
+		const projectId =
+			Constants?.expoConfig?.extra?.eas?.projectId ??
+			Constants?.easConfig?.projectId;
+		if (!projectId) {
+			handleRegistrationError("Project ID not found");
+		}
+		try {
+			const pushTokenString = (
+				await Notifications.getExpoPushTokenAsync({
+					projectId,
+				})
+			).data;
+			console.log(pushTokenString);
+			return pushTokenString;
+		} catch (e: unknown) {
+			handleRegistrationError(`${e}`);
+		}
+	} else {
+		handleRegistrationError(
+			"Must use physical device for push notifications",
+		);
 	}
 }
 
-export default App;
-
-const LayoutApp = () => {
-	const { authStatus } = useAuthenticator((context) => [
-		context.authStatus,
-	]);
-	const [renderAuth, setRenderAuth] = React.useState<
-		"signIn" | "signUp" | undefined
+export default function App() {
+	const [expoPushToken, setExpoPushToken] = useState("");
+	const [notification, setNotification] = useState<
+		Notifications.Notification | undefined
 	>(undefined);
-	const { route, toSignIn, toSignUp } = useAuthenticator((context) => [
-		context.route,
-	]);
+	const notificationListener = useRef<Notifications.Subscription>();
+	const responseListener = useRef<Notifications.Subscription>();
 
-	React.useEffect(() => {
-		if (![authStatus, route].includes("authenticated")) {
-			return;
-		}
-		setRenderAuth(undefined);
+	useEffect(() => {
+		registerForPushNotificationsAsync()
+			.then((token) => setExpoPushToken(token ?? ""))
+			.catch((error: any) => setExpoPushToken(`${error}`));
 
-		currentAuthenticatedUser();
-	}, [route, authStatus]);
+		notificationListener.current =
+			Notifications.addNotificationReceivedListener(
+				(notification) => {
+					setNotification(notification);
+				},
+			);
+
+		responseListener.current =
+			Notifications.addNotificationResponseReceivedListener(
+				(response) => {
+					console.log(response);
+				},
+			);
+
+		return () => {
+			notificationListener.current &&
+				Notifications.removeNotificationSubscription(
+					notificationListener.current,
+				);
+			responseListener.current &&
+				Notifications.removeNotificationSubscription(
+					responseListener.current,
+				);
+		};
+	}, []);
 
 	return (
-		<GestureHandlerRootView style={{ flex: 1 }}>
-			<Tabs
-				screenOptions={{
-					headerShown: false,
-					tabBarShowLabel: false,
-					tabBarActiveTintColor:
-						"rgb(29, 155, 240)",
+		<View
+			style={{
+				flex: 1,
+				alignItems: "center",
+				justifyContent: "space-around",
+			}}
+		>
+			<Text>Your Expo push token: {expoPushToken}</Text>
+			<View
+				style={{
+					alignItems: "center",
+					justifyContent: "center",
 				}}
 			>
-				<Tabs.Screen
-					name="(index)"
-					options={{
-						title: "Home",
-						tabBarIcon: makeIcon(
-							"home",
-							"home-active",
-						),
-					}}
-				/>
-				<Tabs.Screen
-					name="(search)"
-					options={{
-						title: "Search",
-						tabBarIcon: makeIcon(
-							"explore",
-							"explore-active",
-						),
-					}}
-				/>
-				<Tabs.Screen
-					name="(login)"
-					options={{
-						title: "Login",
-						tabBarIcon: makeIcon(
-							"share",
-							"profile",
-						),
-					}}
-				/>
-				{[authStatus, route].includes(
-					"authenticated",
-				) && (
-					<Tabs.Screen
-						name="(profile)"
-						options={{
-							title: "Profile",
-							tabBarIcon: makeIcon(
-								"profile",
-								"profile-active",
-							),
-						}}
-					/>
-				)}
-			</Tabs>
-		</GestureHandlerRootView>
+				<Text>
+					Title:{" "}
+					{notification &&
+						notification.request.content
+							.title}{" "}
+				</Text>
+				<Text>
+					Body:{" "}
+					{notification &&
+						notification.request.content
+							.body}
+				</Text>
+				<Text>
+					Data:{" "}
+					{notification &&
+						JSON.stringify(
+							notification.request
+								.content.data,
+						)}
+				</Text>
+			</View>
+			<Button
+				title="Press to Send Notification"
+				onPress={async () => {
+					await sendPushNotification(
+						expoPushToken,
+					);
+				}}
+			/>
+		</View>
 	);
-};
+}
