@@ -1,0 +1,16 @@
+{
+        "recommendations": [
+                "streetsidesoftware.code-spell-checker",
+                "biomejs.biome",
+                "dbaeumer.vscode-eslint",
+                "expo.vscode-expo-tools",
+                "wix.vscode-import-cost",
+                "ms-vscode.vscode-typescript-next",
+                "christian-kohler.npm-intellisense",
+                "kricsleo.vscode-package-json-inspector",
+                "christian-kohler.path-intellisense",
+                "yoavbls.pretty-ts-errors",
+                "sonarsource.sonarlint-vscode",
+                "gruntfuggly.todo-tree"
+        ]
+}
