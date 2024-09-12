@@ -1,9 +1,9 @@
 import { DATA } from "@/data";
-// import { CustomBlurView } from "@/components/CustomBlurView";
 import type { GROUP, SubGroupRenderTypes } from "@/types";
 import { Ionicons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useTheme } from "@react-navigation/native";
+import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
@@ -25,7 +25,8 @@ import Animated, {
 	withTiming,
 } from "react-native-reanimated";
 
-import { BlurView } from "expo-blur";
+const ITEM_HEIGHT = 80;
+const GAP = 8;
 
 export const CustomBlurView = () => {
 	const tint = useColorScheme();
@@ -41,9 +42,6 @@ export const CustomBlurView = () => {
 		/>
 	);
 };
-
-const ITEM_HEIGHT = 80;
-const GAP = 8;
 
 const SubGroupRender = ({ val, i, isSubGroups }: SubGroupRenderTypes) => {
 	const theme = useTheme();
@@ -140,7 +138,15 @@ const RenderItem = ({
 
 	return (
 		<Animated.View
-			layout={LinearTransition.springify()}
+			{...Platform.select({
+				android: {
+					layout: LinearTransition.springify(),
+				},
+				ios: {
+					layout: LinearTransition.springify(),
+				},
+				default: {},
+			})}
 			onLayout={isSubGroups ? onLayout : undefined}
 		>
 			<Pressable
@@ -199,40 +205,50 @@ const RenderItem = ({
 					{item.description}
 				</Text>
 			</Pressable>
-			{item.subGroups?.length > 0 && (
-				<View style={styles.cardShadow}>
-					<Animated.View
-						layout={LinearTransition.springify()}
-						style={[
-							styles.subGroupWrapper,
-							{
-								marginTop: !isSubGroups
-									? -ITEM_HEIGHT /
+			{
+				item.subGroups?.length > 0 && (
+					<View style={styles.cardShadow}>
+						<Animated.View
+							{...Platform.select({
+								android: {
+									layout: LinearTransition.springify(),
+								},
+								ios: {
+									layout: LinearTransition.springify(),
+								},
+								default: {},
+							})}
+							style={[
+								styles.subGroupWrapper,
+								{
+									marginTop: !isSubGroups
+										? -ITEM_HEIGHT /
 										2.4
-									: 0,
-							},
-						]}
-					>
-						{item.subGroups.map(
-							(val, i) => (
-								<SubGroupRender
-									key={
-										val.id
-									}
-									val={
-										val
-									}
-									i={i}
-									isSubGroups={
-										isSubGroups
-									}
-								/>
-							),
-						)}
-					</Animated.View>
-				</View>
-			)}
-		</Animated.View>
+										: 0,
+								},
+							]}
+						>
+							{item.subGroups.map(
+								(val, i) => (
+									<SubGroupRender
+										key={
+											val.id
+										}
+										val={
+											val
+										}
+										i={i}
+										isSubGroups={
+											isSubGroups
+										}
+									/>
+								),
+							)}
+						</Animated.View>
+					</View>
+				)
+			}
+		</Animated.View >
 	);
 };
 
@@ -278,6 +294,7 @@ export const FeedAnimated = () => {
 					uri: Platform.select({
 						android: "https://oboi-telefon.ru/wallpapers/82801/37109.jpg",
 						ios: "https://www.ytechb.com/wp-content/uploads/2022/09/iPhone-14-Wallpaper-Blue.webp",
+						default: "https://www.ytechb.com/wp-content/uploads/2022/09/iPhone-14-Wallpaper-Blue.webp",
 					}),
 				}}
 				style={styles.bgImage}
@@ -310,16 +327,30 @@ const styles = StyleSheet.create({
 		position: "relative",
 		width: "100%",
 	},
+
+	// Card
 	cardShadow: {
+		...Platform.select({
+			android: {
+				shadowOpacity: 0.1,
+			},
+			ios: {
+				shadowOpacity: 0.1,
+			},
+			default: {
+				shadowOpacity: 0,
+			},
+		}),
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
 			height: 0,
 		},
-		shadowOpacity: 0.1,
 		shadowRadius: 5,
 		elevation: 5,
 	},
+
+
 	title: {
 		fontSize: 15,
 		fontWeight: "600",
