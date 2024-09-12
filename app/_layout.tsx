@@ -238,7 +238,7 @@ const LayoutApp = () => {
 				<Tabs.Screen
 					name="(index)"
 					options={{
-						title: "Home",
+						title: "MeloCap",
 						tabBarIcon: makeIcon(
 							"home",
 							"home-active",
@@ -270,16 +270,6 @@ const LayoutApp = () => {
 					name="(login)"
 					options={{
 						title: "Login",
-						tabBarIcon: makeIcon(
-							"share",
-							"share",
-						),
-					}}
-				/>
-				<Tabs.Screen
-					name="(avatar)"
-					options={{
-						title: "Avatar",
 						tabBarIcon: makeIcon(
 							"share",
 							"share",
