@@ -15,9 +15,6 @@ export const unstable_settings = {
 	login: {
 		initialRouteName: "login",
 	},
-	avatar: {
-		initialRouteName: "avatar"
-	},
 };
 
 export default function DynamicLayout() {
