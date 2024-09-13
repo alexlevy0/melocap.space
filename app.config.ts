@@ -33,6 +33,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 		// @ts-ignore : Property 'EXPO_PUBLIC_EXPO_ROUTER_ORIGIN' does not exist on type 'typeof env'
 		["expo-router", { origin: process.env.EXPO_PUBLIC_EXPO_ROUTER_ORIGIN || '' }],
 		"expo-splash-screen",
+		[
+			"@sentry/react-native/expo",
+			{
+				// @ts-expect-error 'typeof env'
+				"organization": process.env.EXPO_PUBLIC_SENTRY_ORG,
+				// @ts-expect-error 'typeof env'
+				"project": process.env.EXPO_PUBLIC_SENTRY_PROJECT,
+				"url": "https://sentry.io/"
+			}
+		]
 	],
     	extra: {
       		"eas": {

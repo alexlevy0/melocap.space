@@ -40,3 +40,6 @@ amplify_outputs*
 amplifyconfiguration*
 
 .env
+.env.local
+ios/sentry.properties
+android/sentry.properties
