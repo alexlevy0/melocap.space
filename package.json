@@ -47,6 +47,7 @@
 		"@react-three/drei": "9.112.0",
 		"@react-three/fiber": "8.17.7",
 		"@react-three/xr": "6.2.7",
+		"@sentry/react-native": "5.32.0",
 		"@shopify/react-native-skia": "1.2.3",
 		"@tamagui/avatar": "1.108.2",
 		"@tamagui/babel-plugin": "1.110.2",
