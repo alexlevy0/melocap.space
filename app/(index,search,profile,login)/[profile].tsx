@@ -1,5 +1,3 @@
-import { useAuthenticator } from "@aws-amplify/ui-react-native";
-import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useTheme } from "@react-navigation/native";
 import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
@@ -12,6 +10,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Feed } from "@/components/feed";
 import { posts, users } from "@/data";
 import { goldenRatio } from "@/utils";
+import { onPressBottomSheet } from "@/utils/bottomSheet";
+import { useAuthenticator } from "@aws-amplify/ui-react-native";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 
 // Run in Node.js environments at build time to generate a list of
 // pages that should be statically generated.
@@ -26,59 +27,16 @@ export default function Profile() {
 
 export function ProfileScreen({ profile }: { profile: string }) {
 	const user = users.find((user) => user.user === profile);
-	const { showActionSheetWithOptions } = useActionSheet();
-	const { signOut, signIn } = useAuthenticator();
 	const theme = useTheme();
+
 	const { authStatus } = useAuthenticator((context) => [
 		context.authStatus,
 	]);
 	const isLoggedIn = [authStatus].includes("authenticated");
+	const { showActionSheetWithOptions } = useActionSheet();
+	const { signOut } = useAuthenticator();
 	const onPress = () => {
-		const options = [
-			"Votre compte",
-			"Sécurité et accès au compte",
-			"Premium",
-			"Monétisation",
-			"Confidentialité et sécurité",
-			"Notification",
-			"Accessibilité, affichage et langues",
-			"Resssources supplémentaires",
-			isLoggedIn ? "Déconnexion" : "Connexion",
-			"Cancel",
-		];
-		const LogButtonIndex = options.length - 2;
-		const cancelButtonIndex = options.length - 1;
-
-		showActionSheetWithOptions(
-			{
-				title: "Paramètres",
-				message: "Trouves tous les paramètres de votre compte ici",
-				options,
-				cancelButtonIndex,
-				destructiveButtonIndex: LogButtonIndex,
-			},
-			(selectedIndex: number | undefined) => {
-				switch (selectedIndex) {
-					case 1:
-						// Save
-						break;
-
-					// TODO Add more options
-
-					case LogButtonIndex:
-						if (isLoggedIn) {
-							signOut();
-							return;
-						}
-						// TODO Redirect to auth
-						// signIn();
-						return;
-
-					case cancelButtonIndex:
-					// Canceled
-				}
-			},
-		);
+		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus });
 	};
 
 	if (!user) {
