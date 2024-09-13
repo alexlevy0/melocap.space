@@ -13,6 +13,7 @@
 		"native:ios": "npx expo run",
 		"web": "expo start --web",
 		"build:web": "npx expo export -p web",
+		"test": "jest",
 		"generate-themes": "tamagui generate-themes ./theme-builder.ts ./theme-output.ts",
 		"format": "biome check --no-errors-on-unmatched --apply .",
 		"build:liveness:docker": "cd liveness-ts-image && docker build --platform linux/amd64 -t docker-image:test .",
@@ -21,6 +22,9 @@
 		"deploying:liveness:docker:create:repository": "cd liveness-ts-image && aws ecr create-repository --repository-name liveness-ts --region us-west-2 --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE",
 		"deploying:liveness:docker:create:tag": "ts-node liveness-ts-image/scripts/dockerManager.ts tag",
 		"deploying:liveness:docker:push": "ts-node liveness-ts-image/scripts/dockerManager.ts push"
+	},
+	"jest": {
+		"preset": "jest-expo"
 	},
 	"dependencies": {
 		"@aws-amplify/react-native": "1.1.4",
@@ -117,6 +121,8 @@
 		"expo-tracking-transparency": "~4.0.2",
 		"expo-video": "1.2.4",
 		"expo-web-browser": "~13.0.3",
+		"jest": "^29.4.0",
+		"jest-expo": "~51.0.4",
 		"leva": "0.9.35",
 		"lottie-react-native": "6.7.0",
 		"react": "18.2.0",
@@ -144,6 +150,7 @@
 		"@babel/core": "^7.20.0",
 		"@babel/plugin-proposal-export-namespace-from": "^7.18.9",
 		"@biomejs/biome": "1.8.3",
+		"@types/jest": "29.5.13",
 		"@types/react": "~18.2.45",
 		"aws-cdk": "2.151.0",
 		"aws-cdk-lib": "2.151.0",
