@@ -19,6 +19,7 @@ import {
 } from "@aws-amplify/ui-react"
 import { getCurrentUser, signOut } from "aws-amplify/auth"
 import React from "react"
+import { noop } from "@/utils"
 
 export default function LoginMain() {
 	return (
@@ -39,15 +40,12 @@ async function currentAuthenticatedUser() {
 	}
 }
 function Login() {
-	const router = useRouter()
 	const params = useLocalSearchParams<{ q?: string }>()
-	const filteredPosts = !params.q ? posts : posts.filter((post) => post.post.toLowerCase().includes(params.q.toLowerCase()))
 
 	const { user } = useAuthenticator((context) => [context.user])
 	const { authStatus } = useAuthenticator((context) => [context.authStatus])
 	const { route, toSignIn, toSignUp } = useAuthenticator((context) => [context.route])
 	const [showAccountSettings, setShowAccountSettings] = React.useState(false)
-	const [showFeatures, setShowFeatures] = React.useState(false)
 	const [renderAuth, setRenderAuth] = React.useState<"signIn" | "signUp" | undefined>(undefined)
 	const { tokens } = useTheme()
 
@@ -77,27 +75,9 @@ function Login() {
 	}
 
 	const upgrade = async () => {
-		try {
-			// const stripe = await loadStripe(
-			// 	"pk_test_51OHZRzHjC5oFez5BiDFM3Up4nzlz0XkRwfHDXbxLjNqzJSLuBq0ZKwyrhVH26W1pVG18vHKPINzFoBhTPmy7EhGE00vtJ4cAF4",
-			// )
-			// console.log({ stripe })
-			// const error = await stripe?.redirectToCheckout({
-			// 	lineItems: [{ price: "price_1OHZaRHjC5oFez5B3xJk2zRS", quantity: 1 }],
-			// 	mode: "subscription",
-			// 	successUrl: "https://main.dvqngwodvr6ir.amplifyapp.com/",
-			// 	cancelUrl: "https://main.dvqngwodvr6ir.amplifyapp.com/cancel",
-			// })
-			// console.log({ error })
-		} catch (error) {
-			console.error(error)
-		}
 	}
 
 	const renderDashboard = () => {
-		if (showFeatures) {
-			return <Features />
-		}
 		return showAccountSettings ? (
 			<Flex flex={1} direction="column" justifyContent="space-between">
 				<Flex direction="column" justifyContent="space-between">
@@ -126,18 +106,10 @@ function Login() {
 		<>
 			<Stack.Screen
 				options={{
-					title: "Search",
-					headerSearchBarOptions: {
-						onChangeText: (event) => {
-							// Update the query params to match the search query.
-							router.setParams({
-								q: event.nativeEvent.text,
-							})
-						},
-					},
+					title: "Login",
 				}}
 			/>
-			{true ?? (
+			{false ?? (
 				<Authenticator.Provider>
 					<Grid
 						style={{ height: "100vh" }}
@@ -220,14 +192,6 @@ function Login() {
 											Sign Up
 										</Button>
 										<Menu menuAlign="end" size="large">
-											<MenuItem onClick={() => setShowFeatures(true)}>
-												Features
-											</MenuItem>
-											<MenuItem onClick={displayAccountSettings}>
-												API
-											</MenuItem>
-											<MenuItem onClick={upgrade}>Upgrade</MenuItem>
-											<Divider />
 											<MenuItem onClick={goSignIn}>Login</MenuItem>
 											<MenuItem onClick={goSignUp}>Sign Up</MenuItem>
 										</Menu>
