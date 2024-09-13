@@ -4,6 +4,7 @@ import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import * as Sentry from "@sentry/react-native";
 
 import { Feed } from "@/components/feed";
 import { posts } from "@/data";
@@ -37,16 +38,13 @@ export default function Search() {
 	const { searchResult, setSearchResult} = useState()
 
 	useEffect(() => {
-		const fetch = async () => {
-			const accessToken = await getSpotifyAccessToken();
-			console.log({ accessToken });
-			const data = await searchSpotify({ query: params.q ?? "", accessToken })
-			
-			setSearchResult(data)
-		}
+		// Sentry.captureException(new Error("First error"));
+		// Sentry.nativeCrash();
+		// throw new Error('My first Sentry error!');
+
 
 		// fetch()
-	}, [])
+	}, [params.q ?? ""]);
 
 	return (
 		<>
