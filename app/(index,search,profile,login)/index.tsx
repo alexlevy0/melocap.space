@@ -52,24 +52,7 @@ export default function Home() {
 				contentInsetAdjustmentBehavior="automatic"
 				data={posts}
 			/> */}
-			<FeedAnimated contentInsetAdjustmentBehavior="automatic" data={posts} />
-			{/* <Stack>
-				<Stack.Screen
-					name="index"
-					options={{
-						headerLargeTitle: true,
-						headerTransparent: true,
-						title: "Groups",
-						headerTitleStyle: {
-							color:
-								colorScheme ===
-								"dark"
-									? "black"
-									: "white",
-						},
-					}}
-				/>
-			</Stack> */}
+			<FeedAnimated />
 		</>
 	);
 }
