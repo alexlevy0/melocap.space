@@ -5,7 +5,9 @@ import { posts } from "@/data";
 import { goldenRatio } from "@/utils";
 import { onPressBottomSheet } from "@/utils/bottomSheet";
 import { MoreVertical } from "@tamagui/lucide-icons";
-import { Button } from "react-native";
+import { useAuthenticator } from "@aws-amplify/ui-react-native";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import { Button } from "@tamagui/button";
 
 export default function Search() {
 	const router = useRouter();
@@ -18,6 +20,17 @@ export default function Search() {
 				.toLowerCase()
 				.includes(params.q.toLowerCase()),
 		);
+
+
+	const { authStatus } = useAuthenticator((context) => [
+		context.authStatus,
+	]);
+	const isLoggedIn = [authStatus].includes("authenticated");
+	const { showActionSheetWithOptions } = useActionSheet();
+	const { signOut } = useAuthenticator();
+	const onPress = () => {
+		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus });
+	};
 	return (
 		<>
 			<Stack.Screen
@@ -40,7 +53,7 @@ export default function Search() {
 								backgroundColor:
 									"transparent",
 							}}
-							onPress={onPressBottomSheet}
+							onPress={onPress}
 							size="$4"
 							scaleIcon={goldenRatio}
 							icon={MoreVertical}
