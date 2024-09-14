@@ -1,10 +1,11 @@
-import { secret } from '@aws-amplify/backend';
+import { secret } from "@aws-amplify/backend"
 
 // @ts-ignore
-const clientId: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID || secret("EXPO_PUBLIC_SPOTIFY_CLIENT_ID")
+const clientId: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID || "EXPO_PUBLIC_SPOTIFY_CLIENT_ID"
+console.log({ clientId })
 
 // @ts-ignore
-const clientSecret: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET || secret("EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET")
+const clientSecret: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET || "EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET"
 
 export async function getSpotifyAccessToken() {
 	const url = "https://accounts.spotify.com/api/token"
@@ -38,9 +39,8 @@ export async function getSpotifyAccessToken() {
 	}
 }
 
-export async function searchSpotify({ accessToken, query }: { accessToken: string, query: string }) {
-	
-	const encodedQuery = encodeURIComponent(query) 
+export async function searchSpotify({ accessToken, query }: { accessToken: string; query: string }) {
+	const encodedQuery = encodeURIComponent(query)
 	const url = `https://api.spotify.com/v1/search?q=${encodedQuery}&type=track&limit=50`
 
 	try {
