@@ -1,7 +1,8 @@
 import { useTheme } from "@react-navigation/native";
+import { Image } from "expo-image";
+import * as Linking from 'expo-linking';
 import { Link, useRouter, useSegments } from "expo-router";
 import { Pressable, Text, View, useColorScheme } from "react-native";
-import { Image } from "expo-image";
 
 import type { Post } from "@/data";
 type Group<T extends string> = `(${T})`;
@@ -15,7 +16,8 @@ export function PostCmp({ item }: { item: Post }) {
 	return (
 		<Pressable
 			onPress={() => {
-				router.push(`/${segment}/post/${item.id}`);
+				// router.push(`/${segment}/post/${item.id}`);
+				Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
 			}}
 		>
 			{({ hovered, pressed }) => (

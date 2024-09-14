@@ -58,6 +58,43 @@ export async function searchSpotify({ accessToken, query }: { accessToken: strin
 	}
 }
 
+export async function getAvailableDevices({ accessToken }: { accessToken: string }) {
+	const url = `https://api.spotify.com/v1/me/player/devices`
+
+	try {
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${accessToken}`,
+			},
+		})
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`)
+		}
+
+		const data: DevicesResponse = await response.json()
+		return data
+	} catch (error) {
+		console.error("Error with Spotify query:", error)
+	}
+}
+
+type Device = {
+	id: string
+	is_active: boolean
+	is_private_session: boolean
+	is_restricted: boolean
+	name: string
+	type: "Computer" | "TV" | "Smartphone"
+	volume_percent: number
+	supports_volume: boolean
+}
+
+type DevicesResponse = {
+	devices: Device[]
+}
+
 type SpotifyApiResponse = {
 	tracks?: {
 		href: string
