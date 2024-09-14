@@ -21,18 +21,6 @@ export default function DynamicLayout() {
 	return (
 		<Stack
 			screenOptions={{
-				headerTransparent: true,
-				headerLargeTitle: true,
-				headerLargeTitleShadowVisible: true,
-				// @ts-ignore 
-				headerLargeStyle: {
-					// backgroundColor: PlatformColor("systemGroupedBackgroundColor"),
-				},
-				headerBlurEffect: "prominent",
-				headerShadowVisible: true,
-				headerStyle: {
-					backgroundColor: "rgba(255, 255, 255, 0.01)",
-				},
 				headerRight(props) {
 					if (isSharingAvailable()) {
 						return (
