@@ -48,7 +48,7 @@ const routingInstrumentation = new Sentry.ReactNavigationInstrumentation({
 });
 Sentry.init({
 	dsn: "https://0eeb3ae0c1e3b7c2b7917487bed90c89@o4507176862941184.ingest.de.sentry.io/4507947646910544",
-	debug: true, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
+	debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
 	// Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
 	// We recommend adjusting this value in production.
 	tracesSampleRate: 1.0,
