@@ -1,3 +1,5 @@
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useTheme } from "@react-navigation/native";
 import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
@@ -11,8 +13,6 @@ import { Feed } from "@/components/feed";
 import { posts, users } from "@/data";
 import { goldenRatio } from "@/utils";
 import { onPressBottomSheet } from "@/utils/bottomSheet";
-import { useAuthenticator } from "@aws-amplify/ui-react-native";
-import { useActionSheet } from "@expo/react-native-action-sheet";
 
 // Run in Node.js environments at build time to generate a list of
 // pages that should be statically generated.
@@ -49,192 +49,196 @@ export function ProfileScreen({ profile }: { profile: string }) {
 
 	return (
 		<>
-			<Head>
-				<title>{user.name} | Profile</title>
-				<meta name="description" content={user.bio} />
-				<meta
-					property="og:description"
-					content={user.bio}
-				/>
-				<meta
-					property="og:image"
-					content={user.image}
-				/>
-			</Head>
-			<Stack.Screen options={{ title: "Profile" }} />
-			<Stack.Screen
-				options={{
-					title: "Profile",
-					headerRight: () => (
-						<Button
-							style={{
-								borderWidth: 0,
-								backgroundColor:
-									"transparent",
-							}}
-							onPress={onPress}
-							size="$4"
-							scaleIcon={goldenRatio}
-							icon={MoreVertical}
+			<Authenticator.Provider>
+				<Authenticator>
+					<Head>
+						<title>{user.name} | Profile</title>
+						<meta name="description" content={user.bio} />
+						<meta
+							property="og:description"
+							content={user.bio}
 						/>
-					),
-				}}
-			/>
-			<Feed
-				contentInsetAdjustmentBehavior="automatic"
-				style={{ flex: 1 }}
-				ListHeaderComponent={() => (
-					<View
-						style={{
-							flex: 1,
-							paddingHorizontal: 18,
-							gap: 8,
-							paddingTop: 24,
+						<meta
+							property="og:image"
+							content={user.image}
+						/>
+					</Head>
+					<Stack.Screen options={{ title: "Profile" }} />
+					<Stack.Screen
+						options={{
+							title: "Profile",
+							headerRight: () => (
+								<Button
+									style={{
+										borderWidth: 0,
+										backgroundColor:
+											"transparent",
+									}}
+									onPress={onPress}
+									size="$4"
+									scaleIcon={goldenRatio}
+									icon={MoreVertical}
+								/>
+							),
 						}}
-					>
-						<Image
-							// source={user.image}
-							source={
-								"https://picsum.photos/seed/696/3000/2000"
-							}
-							style={{
-								width: 64,
-								height: 64,
-								borderRadius:
-									64 / 2,
-							}}
-						/>
-						<View>
-							<Text
+					/>
+					<Feed
+						contentInsetAdjustmentBehavior="automatic"
+						style={{ flex: 1 }}
+						ListHeaderComponent={() => (
+							<View
 								style={{
-									fontSize: 32,
-									fontWeight: "bold",
-									color: theme
-										.colors
-										.text,
+									flex: 1,
+									paddingHorizontal: 18,
+									gap: 8,
+									paddingTop: 24,
 								}}
 							>
-								{user.name}
-							</Text>
-							<Text
-								style={{
-									fontSize: 16,
-									opacity: 0.6,
-									color: theme
-										.colors
-										.text,
-								}}
-							>
-								@{user.user}
-							</Text>
-						</View>
-						<Text
-							style={{
-								fontSize: 16,
-								color: theme
-									.colors
-									.text,
-							}}
-						>
-							{user.bio}
-						</Text>
-						<Link
-							style={{
-								color: "dodgerblue",
-							}}
-							href={user.url as any}
-						>
-							{user.url
-								.replace(
-									/\/$/,
-									"",
-								)
-								.replace(
-									/^https?:\/\//,
-									"",
-								)}
-						</Link>
-						<View
-							style={{
-								flexDirection:
-									"row",
-								flex: 1,
-								// borderWidth: 1,
-								justifyContent:
-									"space-around",
-							}}
-						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "bold",
-									color: theme
-										.colors
-										.text,
-								}}
-							>
-								{user.followers}{" "}
+								<Image
+									// source={user.image}
+									source={
+										"https://picsum.photos/seed/696/3000/2000"
+									}
+									style={{
+										width: 64,
+										height: 64,
+										borderRadius:
+											64 / 2,
+									}}
+								/>
+								<View>
+									<Text
+										style={{
+											fontSize: 32,
+											fontWeight: "bold",
+											color: theme
+												.colors
+												.text,
+										}}
+									>
+										{user.name}
+									</Text>
+									<Text
+										style={{
+											fontSize: 16,
+											opacity: 0.6,
+											color: theme
+												.colors
+												.text,
+										}}
+									>
+										@{user.user}
+									</Text>
+								</View>
 								<Text
 									style={{
-										opacity: 0.6,
+										fontSize: 16,
 										color: theme
 											.colors
 											.text,
 									}}
 								>
-									playlists
+									{user.bio}
 								</Text>
-							</Text>
+								<Link
+									style={{
+										color: "dodgerblue",
+									}}
+									href={user.url as any}
+								>
+									{user.url
+										.replace(
+											/\/$/,
+											"",
+										)
+										.replace(
+											/^https?:\/\//,
+											"",
+										)}
+								</Link>
+								<View
+									style={{
+										flexDirection:
+											"row",
+										flex: 1,
+										// borderWidth: 1,
+										justifyContent:
+											"space-around",
+									}}
+								>
+									<Text
+										style={{
+											fontSize: 16,
+											fontWeight: "bold",
+											color: theme
+												.colors
+												.text,
+										}}
+									>
+										{user.followers}{" "}
+										<Text
+											style={{
+												opacity: 0.6,
+												color: theme
+													.colors
+													.text,
+											}}
+										>
+											playlists
+										</Text>
+									</Text>
 
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "bold",
-									color: theme
-										.colors
-										.text,
-								}}
-							>
-								{user.followers}{" "}
-								<Text
-									style={{
-										opacity: 0.6,
-										color: theme
-											.colors
-											.text,
-									}}
-								>
-									followers
-								</Text>
-							</Text>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "bold",
-									color: theme
-										.colors
-										.text,
-								}}
-							>
-								{user.followers}{" "}
-								<Text
-									style={{
-										opacity: 0.6,
-										color: theme
-											.colors
-											.text,
-									}}
-								>
-									suivi(e)s
-								</Text>
-							</Text>
-						</View>
-					</View>
-				)}
-				data={posts.filter(
-					(post) => post.user.user === profile,
-				)}
-			/>
+									<Text
+										style={{
+											fontSize: 16,
+											fontWeight: "bold",
+											color: theme
+												.colors
+												.text,
+										}}
+									>
+										{user.followers}{" "}
+										<Text
+											style={{
+												opacity: 0.6,
+												color: theme
+													.colors
+													.text,
+											}}
+										>
+											followers
+										</Text>
+									</Text>
+									<Text
+										style={{
+											fontSize: 16,
+											fontWeight: "bold",
+											color: theme
+												.colors
+												.text,
+										}}
+									>
+										{user.followers}{" "}
+										<Text
+											style={{
+												opacity: 0.6,
+												color: theme
+													.colors
+													.text,
+											}}
+										>
+											suivi(e)s
+										</Text>
+									</Text>
+								</View>
+							</View>
+						)}
+						data={posts.filter(
+							(post) => post.user.user === profile,
+						)}
+					/>
+				</Authenticator>
+			</Authenticator.Provider>
 		</>
 	);
 }

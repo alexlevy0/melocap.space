@@ -12,9 +12,6 @@ export const unstable_settings = {
 	profile: {
 		initialRouteName: "profile",
 	},
-	login: {
-		initialRouteName: "login",
-	},
 };
 
 export default function DynamicLayout() {
