@@ -303,16 +303,6 @@ const LayoutApp = () => {
 						),
 					}}
 				/>
-				<Tabs.Screen
-					name="(login)"
-					options={{
-						title: "Login",
-						tabBarIcon: makeIcon(
-							"share",
-							"share",
-						),
-					}}
-				/>
 			</Tabs>
 		</GestureHandlerRootView>
 	);
