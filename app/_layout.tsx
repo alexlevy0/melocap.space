@@ -39,8 +39,6 @@ import { tamaguiConfig } from "@/tamagui.config";
 
 Amplify.configure(outputs, { ssr: true });
 
-
-
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation({
 	enableTimeToInitialDisplay: !isRunningInExpoGo, // Only in native builds, not in Expo Go.
@@ -126,11 +124,7 @@ const App: React.FC = () => {
 									: "light"
 							}
 						>
-							{/* <Authenticator> */}
 							<LayoutApp />
-							{/* </Authenticator> */}
-							{/* <Layout /> */}
-							{/* <LivenessQuickStartReact/> */}
 						</Theme>
 					</Authenticator.Provider>
 				</ThemeProvider>
@@ -139,95 +133,6 @@ const App: React.FC = () => {
 		// </NavigationContainer>
 	);
 };
-
-/**
- * Layout component containing the main content
- * @returns {React.ReactElement} The rendered layout
- */
-const Layout: React.FC = () => {
-	const onPress = () => {
-		console.log("onPress");
-	};
-	return (
-		<SafeAreaView style={styles.container}>
-			<Head>
-				<title>MeloCaps : Sonorité d’avenir !</title>
-				<meta
-					name="description"
-					content="Tamagui - React Native UI Kit"
-				/>
-			</Head>
-			<AnimatedBackground />
-			<BlurView
-				intensity={80}
-				tint="light"
-				style={styles.blurView}
-			>
-				{/* biome-ignore lint/complexity/useArrowFunction: <explanation> */}
-				<Header
-					onPressFaceLivenessDetector={(): void => {
-						throw new Error(
-							"Function not implemented.",
-						);
-					}}
-				/>
-			</BlurView>
-
-			<YStack f={1} jc="center" ai="center" space="$4" p="$4">
-				<H1 ta="center" fow="800">
-					MeloCap
-				</H1>
-				<H2 ta="center" col="$orange10">
-					Sonorité d’avenir !
-				</H2>
-				<Button
-					size="$6"
-					theme="active"
-					br="$10"
-					onPress={onPress}
-				>
-					À vos paris, vibrez, jouez !!
-				</Button>
-				<XStack space="$4">
-					<View style={styles.container}>
-						<SocialButtons />
-					</View>
-				</XStack>
-				<XStack mt="$8" space="$8">
-					<FeatureCard
-						title="À vos Paris"
-						description="Découvrez chaque jour un nouveau thème musical et misez sur les morceaux qui capturent le mieux son essence. Entrez dans le jeu et mettez vos connaissances musicales à l'épreuve !"
-					/>
-					<FeatureCard
-						title="Misez"
-						description="Sélectionnez vos morceaux et soumettez votre playlist pour participer au défi du jour. La diversité et l'originalité de vos choix pourraient bien faire la différence !"
-					/>
-					<FeatureCard
-						title="Jouez"
-						description="Suivez votre progression dans le classement et rivalisez avec les autres participants pour décrocher la première place. Gagnez des récompenses virtuelles en démontrant votre expertise musicale !"
-					/>
-				</XStack>
-			</YStack>
-		</SafeAreaView>
-	);
-};
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	blurView: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		right: 0,
-		height: 60,
-	},
-});
-
-// Placeholder icons (replace with actual implementations)
-const TwitterIcon: React.FC = () => null;
-const DiscordIcon: React.FC = () => null;
 
 async function currentAuthenticatedUser() {
 	try {
@@ -244,25 +149,6 @@ async function currentAuthenticatedUser() {
 export default Sentry.wrap(App);
 
 const LayoutApp = () => {
-	const { authStatus } = useAuthenticator((context) => [
-		context.authStatus,
-	]);
-	const [renderAuth, setRenderAuth] = React.useState<
-		"signIn" | "signUp" | undefined
-	>(undefined);
-	const { route, toSignIn, toSignUp } = useAuthenticator((context) => [
-		context.route,
-	]);
-
-	React.useEffect(() => {
-		if (![authStatus, route].includes("authenticated")) {
-			return;
-		}
-		setRenderAuth(undefined);
-
-		currentAuthenticatedUser();
-	}, [route, authStatus]);
-
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<Tabs
