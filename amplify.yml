@@ -7,6 +7,7 @@ backend:
         - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
         - echo "EXPO_PUBLIC_SENTRY_PROJECT=$EXPO_PUBLIC_SENTRY_PROJECT" >> .env
         - echo "EXPO_PUBLIC_SENTRY_ORG=$EXPO_PUBLIC_SENTRY_ORG" >> .env
+        - echo "EXPO_PUBLIC_SENTRY_AUTH_TOKEN=$EXPO_PUBLIC_SENTRY_AUTH_TOKEN" >> .env
         - echo "EXPO_PUBLIC_SPOTIFY_CLIENT_ID=$EXPO_PUBLIC_SPOTIFY_CLIENT_ID" >> .env
         - echo "EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET=$EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET" >> .env
 
