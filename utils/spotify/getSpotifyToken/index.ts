@@ -1,7 +1,10 @@
+import { secret } from '@aws-amplify/backend';
+
 // @ts-ignore
-const clientId: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID || "CLIENT_ID"
+const clientId: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_ID || secret("EXPO_PUBLIC_SPOTIFY_CLIENT_ID")
+
 // @ts-ignore
-const clientSecret: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET || "CLIENT_SECRET"
+const clientSecret: string = process.env.EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET || secret("EXPO_PUBLIC_SPOTIFY_CLIENT_SECRET")
 
 export async function getSpotifyAccessToken() {
 	const url = "https://accounts.spotify.com/api/token"
