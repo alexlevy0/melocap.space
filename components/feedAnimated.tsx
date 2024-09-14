@@ -263,7 +263,7 @@ export const FeedAnimated = () => {
 	});
 
 	return (
-		<View style={[styles.container, { paddingTop: headerHeight }]}>
+		<View style={[styles.container, { paddingTop: Platform.OS !== 'web' ? headerHeight : 0 }]}>
 			{Platform.OS === "android" && (
 				<StatusBar style="light" />
 			)}
@@ -327,8 +327,6 @@ const styles = StyleSheet.create({
 		position: "relative",
 		width: "100%",
 	},
-
-	// Card
 	cardShadow: {
 		...Platform.select({
 			android: {
@@ -349,8 +347,6 @@ const styles = StyleSheet.create({
 		shadowRadius: 5,
 		elevation: 5,
 	},
-
-
 	title: {
 		fontSize: 15,
 		fontWeight: "600",
