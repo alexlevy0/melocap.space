@@ -28,6 +28,10 @@ export default function Profile() {
 export function ProfileScreen({ profile }: { profile: string }) {
 	const user = users.find((user) => user.user === profile);
 	const theme = useTheme();
+	// <AccountSettings.ChangePassword
+	//     onSuccess={noop}
+	//     onError={noop}
+	//   />
 
 	const { authStatus } = useAuthenticator((context) => [
 		context.authStatus,
@@ -184,7 +188,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 													.text,
 											}}
 										>
-											playlists
+											Appears in playlists
 										</Text>
 									</Text>
 
@@ -206,7 +210,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 													.text,
 											}}
 										>
-											followers
+											Game count
 										</Text>
 									</Text>
 									<Text
@@ -227,7 +231,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 													.text,
 											}}
 										>
-											suivi(e)s
+											Longest streak
 										</Text>
 									</Text>
 								</View>

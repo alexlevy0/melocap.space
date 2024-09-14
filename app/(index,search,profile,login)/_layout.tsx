@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import Head from "expo-router/head";
 import { Platform, PlatformColor, TouchableOpacity } from "react-native";
 import * as Share from "expo-sharing";
+
 import { Icon } from "@/components/icon";
 
 export const unstable_settings = {
