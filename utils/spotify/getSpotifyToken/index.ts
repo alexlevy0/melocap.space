@@ -38,7 +38,7 @@ export async function getSpotifyAccessToken() {
 export async function searchSpotify({ accessToken, query }: { accessToken: string, query: string }) {
 	
 	const encodedQuery = encodeURIComponent(query) 
-	const url = `https://api.spotify.com/v1/search?q=${encodedQuery}&type=track&limit=10`
+	const url = `https://api.spotify.com/v1/search?q=${encodedQuery}&type=track&limit=50`
 
 	try {
 		const response = await fetch(url, {
@@ -53,7 +53,7 @@ export async function searchSpotify({ accessToken, query }: { accessToken: strin
 		}
 
 		const data: SpotifyApiResponse = await response.json()
-		console.log('searchSpotify :> ', JSON.stringify(data, null, 2))
+		return data
 	} catch (error) {
 		console.error("Error with Spotify query:", error)
 	}

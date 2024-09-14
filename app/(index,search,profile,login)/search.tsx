@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/react-native";
 
 import { Feed } from "@/components/feed";
-import { posts } from "@/data";
+import { posts, type Post } from "@/data";
 import { goldenRatio } from "@/utils";
 import { onPressBottomSheet } from "@/utils/bottomSheet";
 import { getSpotifyAccessToken, searchSpotify } from "@/utils/spotify/getSpotifyToken";
@@ -18,12 +18,12 @@ export default function Search() {
 	const router = useRouter();
 	const params = useLocalSearchParams<{ q?: string }>();
 	// console.log({ posts });
-	const filteredPosts = !params.q
+	const filteredPosts: Post[] = !params.q
 		? posts
 		: posts.filter((post) =>
 			post.post
 				.toLowerCase()
-				.includes(params.q.toLowerCase()),
+				.includes(params.q?.toLowerCase() ?? ''),
 		);
 
 	console.log({ filteredPosts });
@@ -42,12 +42,16 @@ export default function Search() {
 
 	useEffect(() => {
 		const fetch = async () => {
+			if (spotifyAccessToken) {
+				return
+			}
 			const accessToken = await getSpotifyAccessToken();
 			console.log({ accessToken });
 			setSpotifyAccessToken(accessToken)
 		}
 		fetch()
 	}, [params.q ?? ""]);
+
 	useEffect(() => {
 		const fetch = async () => {
 			if (!spotifyAccessToken || !params.q) {
@@ -62,8 +66,49 @@ export default function Search() {
 		// Sentry.nativeCrash();
 		// throw new Error('My first Sentry error!');
 		fetch()
-	}, [params.q ?? ""]);
+	}, [Platform.OS !== 'web' ? (params.q ?? "") : null]);
 
+	const onChangeText = (event: string | { nativeEvent: { text: string } }) => {
+		if (Platform.OS === 'web' && typeof event === 'string') {
+			return router.setParams({ q: event });
+		}
+		if (typeof event === 'object' && 'nativeEvent' in event) {
+			router.setParams({
+				q: event.nativeEvent.text,
+			});
+		}
+	}
+
+	const onPressSearch = async () => {
+		if (!spotifyAccessToken || !params.q) {
+			return
+		}
+		const data = await searchSpotify({ query: params.q ?? "", accessToken: spotifyAccessToken })
+		console.log('res : ', data?.tracks?.items);
+		const _data = data?.tracks?.items.map((track) => {
+			return {
+				user: {
+					user: track.artists[0].name,
+					name: track.artists[0].name,
+					image: track.album.images[0].url,
+					followers: 'toto',
+					url: track.album.images[0].url,
+					bio: 'toto',
+				},
+				post: track.name,
+				id: track.id,
+				// id: track.id,
+				// uri: track.uri,
+				// title: track.name,
+				// artist: track.artists[0].name,
+				// imageUrl: track.album.images[0].url,
+				// album: track.album.name,
+				// albumId: track.album.id,
+			}
+		});
+		console.log({ _data });
+		setSearchResult(_data)
+	}
 	return (
 		<>
 			<Stack.Screen
@@ -71,15 +116,7 @@ export default function Search() {
 					title: "Search Music",
 					headerSearchBarOptions: {
 						hideWhenScrolling: false,
-						// autoFocus: true,
-						onChangeText: (event) => {
-							// Update the query params to match the search query.
-							router.setParams({
-								q: event
-									.nativeEvent
-									.text,
-							});
-						},
+						onChangeText,
 					},
 					headerRight: () => (
 						<Button
@@ -96,28 +133,24 @@ export default function Search() {
 					),
 				}}
 			/>
-			{Platform.OS === 'web' ? <SearchBar /> : null}
+			{Platform.OS === 'web' ? <SearchBar onPress={onPressSearch} onChangeText={onChangeText} /> : null}
 			<Feed
-				data={filteredPosts}
+				// data={filteredPosts}
+				data={searchResult}
 				contentInsetAdjustmentBehavior="automatic"
 			/>
 		</>
 	);
 }
 
-const SearchBar = () => {
-	const router = useRouter();
+const SearchBar = ({ onPress, onChangeText }: { onPress: () => void, onChangeText: (text: string) => void }) => {
 	const params = useLocalSearchParams<{ q?: string }>();
-
-	const onChangeText = (event: string) => {
-		router.setParams({ q: event })
-	}
 	return (
 		<>
 			<View style={{ backgroundColor: "white", height: 50, width: "100%", justifyContent: "center" }}>
 				<XStack alignItems="center" space="$2" padding="$2">
 					<Input autoFocus size="$4" onChangeText={onChangeText} value={params.q} flex={1} placeholder={`Search Music...`} />
-					<Button>Go</Button>
+					<Button onPress={onPress}>Go</Button>
 				</XStack>
 			</View>
 		</>

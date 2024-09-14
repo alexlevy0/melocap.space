@@ -49,8 +49,8 @@ export function PostCmp({ item }: { item: Post }) {
 				>
 					<Image
 						source={{
-							// uri: item.user.image,
-							uri: "https://picsum.photos/seed/696/3000/2000",
+							uri: item.user.image,
+							// uri: "https://picsum.photos/seed/696/3000/2000",
 						}}
 						style={{
 							width: 48,
@@ -92,7 +92,6 @@ export function PostCmp({ item }: { item: Post }) {
 											},
 										]}
 									>
-										@
 										{
 											item
 												.user
