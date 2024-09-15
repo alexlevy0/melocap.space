@@ -5,6 +5,7 @@ import { MoreVertical } from "@tamagui/lucide-icons";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/react-native";
+import { Iframe } from "@bounceapp/iframe"
 
 import { Feed } from "@/components/feed";
 import { posts, type Post } from "@/data";
@@ -26,7 +27,7 @@ export default function Search() {
 				.includes(params.q?.toLowerCase() ?? ''),
 		);
 
-	console.log({ filteredPosts });
+	// console.log({ filteredPosts });
 
 	const { authStatus } = useAuthenticator((context) => [
 		context.authStatus,
@@ -38,6 +39,7 @@ export default function Search() {
 		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus });
 	};
 	const [searchResult, setSearchResult] = useState()
+	const [trackUri, setTrackUri] = useState<string>()
 	const [spotifyAccessToken, setSpotifyAccessToken] = useState()
 
 	useEffect(() => {
@@ -45,8 +47,8 @@ export default function Search() {
 			if (spotifyAccessToken) {
 				return
 			}
+			console.log("getSpotifyAccessToken WARNNNNNN");
 			const accessToken = await getSpotifyAccessToken();
-			console.log({ accessToken });
 			setSpotifyAccessToken(accessToken)
 		}
 		fetch()
@@ -58,7 +60,7 @@ export default function Search() {
 				return
 			}
 			const data = await searchSpotify({ query: params.q ?? "", accessToken: spotifyAccessToken })
-			console.log({ data });
+			// console.log({ data });
 			setSearchResult(data)
 		}
 
@@ -68,23 +70,37 @@ export default function Search() {
 		fetch()
 	}, [Platform.OS !== 'web' ? (params.q ?? "") : null]);
 
+	const onPressPlay = (uri: string) => {
+		console.log({ uri });
+		setTrackUri(uri)
+	}
+
 	const onChangeText = (event: string | { nativeEvent: { text: string } }) => {
 		if (Platform.OS === 'web' && typeof event === 'string') {
-			return router.setParams({ q: event });
+			router.setParams({ q: event });
+			setTimeout(() => {
+				onPressSearch({ limit: 12 })
+			}, 420)
+
+			return
 		}
 		if (typeof event === 'object' && 'nativeEvent' in event) {
 			router.setParams({
 				q: event.nativeEvent.text,
 			});
+			setTimeout(() => {
+				onPressSearch({ limit: 12 })
+			}, 420)
+
 		}
 	}
 
-	const onPressSearch = async () => {
+	const onPressSearch = async ({ limit }: { limit: number }) => {
 		if (!spotifyAccessToken || !params.q) {
 			return
 		}
-		const data = await searchSpotify({ query: params.q ?? "", accessToken: spotifyAccessToken })
-		console.log('res : ', data?.tracks?.items);
+		const data = await searchSpotify({ query: params.q ?? "", accessToken: spotifyAccessToken, limit })
+		// console.log('res : ', data?.tracks?.items);
 		const _data = data?.tracks?.items.map((track) => {
 			return {
 				user: {
@@ -106,7 +122,7 @@ export default function Search() {
 				// albumId: track.album.id,
 			}
 		});
-		console.log({ _data });
+		// console.log({ _data });
 		setSearchResult(_data)
 	}
 	return (
@@ -136,9 +152,29 @@ export default function Search() {
 			{Platform.OS === 'web' ? <SearchBar onPress={onPressSearch} onChangeText={onChangeText} /> : null}
 			<Feed
 				// data={filteredPosts}
+				onPressPlay={onPressPlay}
 				data={searchResult}
 				contentInsetAdjustmentBehavior="automatic"
 			/>
+			{trackUri && (
+				<View
+					style={{
+						flex: 0,
+						height: 153,
+						width: "100%",
+					}}
+				>
+
+					<Iframe
+						uri={`https://open.spotify.com/embed/track/${trackUri}?go=1`}
+						style={{
+							flex: 1,
+						}}
+					/>
+				</View>
+			)}
+
+
 		</>
 	);
 }
@@ -147,7 +183,7 @@ const SearchBar = ({ onPress, onChangeText }: { onPress: () => void, onChangeTex
 	const params = useLocalSearchParams<{ q?: string }>();
 	return (
 		<>
-			<View style={{ backgroundColor: "white", height: 50, width: "100%", justifyContent: "center" }}>
+			<View style={{ backgroundColor: "$background", height: 50, width: "100%", justifyContent: "center" }}>
 				<XStack alignItems="center" space="$2" padding="$2">
 					<Input autoFocus size="$4" onChangeText={onChangeText} value={params.q} flex={1} placeholder={`Search Music...`} />
 					<Button onPress={onPress}>Go</Button>

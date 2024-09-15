@@ -9,15 +9,17 @@ type Group<T extends string> = `(${T})`;
 
 type SharedSegment = Group<"index"> | Group<"search"> | Group<"profile">;
 
-export function PostCmp({ item }: { item: Post }) {
+export function PostCmp({ item, onPressPlay }: { item: Post; onPressPlay: (uri: string) => void }) {
 	const [segment] = useSegments() as [SharedSegment];
 	const router = useRouter();
 	const theme = useTheme();
 	return (
 		<Pressable
 			onPress={() => {
+				// router.push(`/${segment}/post/1`);
 				// router.push(`/${segment}/post/${item.id}`);
-				Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
+				// Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
+				onPressPlay(item.id);
 			}}
 		>
 			{({ hovered, pressed }) => (
@@ -116,6 +118,36 @@ export function PostCmp({ item }: { item: Post }) {
 							{item.post}
 						</Text>
 					</View>
+					<Pressable
+						onPress={() => {
+							// router.push(`/${segment}/post/${item.id}`);
+							Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
+						}}
+						style={[
+							{
+								justifyContent: "center",
+								alignItems: "flex-end",
+							},
+						]}
+					>
+						<Text
+							style={[
+								{
+									fontSize: 12,
+									fontWeight: "bold",
+									textAlign: "right",
+									justifyContent: "center",
+									alignItems: "center",
+									alignContent: "center",
+									color: theme
+										.colors
+										.text,
+								},
+							]}
+						>
+							Play
+						</Text>
+					</Pressable>
 				</View>
 			)}
 		</Pressable>

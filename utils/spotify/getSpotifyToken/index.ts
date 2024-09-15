@@ -35,9 +35,9 @@ export async function getSpotifyAccessToken() {
 	}
 }
 
-export async function searchSpotify({ accessToken, query }: { accessToken: string; query: string }) {
+export async function searchSpotify({ accessToken, query, limit = 35 }: { accessToken: string; query: string; limit?: number }) {
 	const encodedQuery = encodeURIComponent(query)
-	const url = `https://api.spotify.com/v1/search?q=${encodedQuery}&type=track&limit=50`
+	const url = `https://api.spotify.com/v1/search?q=${encodedQuery}&type=track&limit=${limit}`
 
 	try {
 		const response = await fetch(url, {

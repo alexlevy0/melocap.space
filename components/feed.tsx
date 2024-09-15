@@ -7,8 +7,9 @@ import { useRef } from "react";
 
 export function Feed({
 	data,
+	onPressPlay,
 	...props
-}: { data: Post[] } & Partial<FlatList["props"]>) {
+}: { data: Post[]; onPressPlay: (item: Post) => void } & Partial<FlatList["props"]>) {
 	const ref = useRef<FlatList>(null);
 	// useScrollToTop(
 	// 	ref,
@@ -24,7 +25,7 @@ export function Feed({
 			style={{ flex: 1 }}
 			{...props}
 			data={data}
-			renderItem={({ item }) => <PostCmp item={item} />}
+			renderItem={({ item }) => <PostCmp onPressPlay={onPressPlay} item={item} />}
 		/>
 	);
 }

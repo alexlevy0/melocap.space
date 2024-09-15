@@ -36,6 +36,7 @@ import outputs from "@/amplify_outputs.json";
 import { makeIcon } from "@/components/icon";
 import { SocialButtons } from "@/icons";
 import { tamaguiConfig } from "@/tamagui.config";
+import { sayHello } from "@/utils/function";
 
 Amplify.configure(outputs, { ssr: true });
 
@@ -72,6 +73,9 @@ const MyTheme = {
 		primary: "rgb(255, 45, 85)",
 	},
 };
+
+sayHello()
+
 
 /**
  * Main application component
