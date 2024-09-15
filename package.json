@@ -34,6 +34,7 @@
 		"@aws-sdk/node-config-provider": "3.374.0",
 		"@aws-sdk/property-provider": "3.374.0",
 		"@aws-sdk/protocol-http": "3.374.0",
+		"@bounceapp/iframe": "0.3.0",
 		"@expo-google-fonts/space-mono": "0.2.3",
 		"@expo/metro-runtime": "~3.2.3",
 		"@expo/react-native-action-sheet": "4.1.0",
@@ -140,10 +141,11 @@
 		"react-native-url-polyfill": "2.0.0",
 		"react-native-vision-camera": "4.5.1",
 		"react-native-web": "~0.19.10",
+		"react-native-webview": "13.8.6",
 		"remeda": "2.12.0",
 		"tamagui": "1.108.2",
 		"three": "0.168.0",
-		"typescript": "~5.3.3"
+		"typescript": "5.5.4"
 	},
 	"devDependencies": {
 		"@aws-amplify/backend": "1.1.1",
