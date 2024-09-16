@@ -107,7 +107,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 
 	return (
 		<Authenticator.Provider>
-			<Authenticator>
+			<Authenticator socialProviders={['apple'/* , 'facebook', 'google' */]}>
 				<Head>
 					<title>{user.name} | Profile</title>
 					<meta name="description" content={user.bio} />

@@ -5,8 +5,8 @@ const client = generateClient<Schema>()
 
 
 export const sayHello = async () => {
-        const result = await client.queries.sayHello({
-                name: "Amplify",
-        })
-        console.log('->', result)
+        // const result = await client.queries.sayHello({
+        //         name: "Amplify",
+        // })
+        // console.log('->', result)
 }

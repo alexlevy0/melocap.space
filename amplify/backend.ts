@@ -26,3 +26,6 @@ const livenessPolicy = new Policy(livenessStack, "LivenessPolicy", {
 })
 backend.auth.resources.unauthenticatedUserIamRole.attachInlinePolicy(livenessPolicy) // allows guest user access
 backend.auth.resources.authenticatedUserIamRole.attachInlinePolicy(livenessPolicy) // allows logged in user access
+
+const { cfnIdentityPool } = backend.auth.resources.cfnResources;
+cfnIdentityPool.allowUnauthenticatedIdentities = false;
