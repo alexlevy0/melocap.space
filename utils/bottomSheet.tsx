@@ -1,22 +1,23 @@
-export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus }: {
-    signOut: () => void;
-    showActionSheetWithOptions: unknown;
-    isLoggedIn: boolean;
-    authStatus: string;
+export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLoggedIn, onPressAccountIndex,  }: {
+        signOut: () => void;
+        showActionSheetWithOptions: unknown;
+        isLoggedIn: boolean;
+        onPressBottomSheet?: () => void;
 }) => {
 
         const options = [
                 "Votre compte",
-                "Sécurité et accès au compte",
-                "Premium",
-                "Monétisation",
-                "Confidentialité et sécurité",
-                "Notification",
+                // "Sécurité et accès au compte",
+                // "Premium",
+                // "Monétisation",
+                // "Confidentialité et sécurité",
+                // "Notification",
                 "Accessibilité, affichage et langues",
-                "Resssources supplémentaires",
+                // "Resssources supplémentaires",
                 isLoggedIn ? "Déconnexion" : "Connexion",
                 "Cancel",
         ];
+        const AccountIndex = 0;
         const LogButtonIndex = options.length - 2;
         const cancelButtonIndex = options.length - 1;
 
@@ -30,19 +31,15 @@ export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLogg
                 },
                 (selectedIndex: number | undefined) => {
                         switch (selectedIndex) {
-                                case 1:
-                                        // Save
+                                case AccountIndex:
+                                        onPressAccountIndex()
                                         break;
-
-                                // TODO Add more options
 
                                 case LogButtonIndex:
                                         if (isLoggedIn) {
                                                 signOut();
                                                 return;
                                         }
-                                        // TODO Redirect to auth
-                                        // signIn();
                                         return;
 
                                 case cancelButtonIndex:
