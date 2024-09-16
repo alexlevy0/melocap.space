@@ -42,7 +42,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
 				"project": process.env.EXPO_PUBLIC_SENTRY_PROJECT,
 				"url": "https://sentry.io/"
 			}
-		]
+		],
+		[
+			"expo-local-authentication",
+			{
+			  "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
+			}
+		],
 	],
     	extra: {
       		"eas": {
