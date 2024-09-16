@@ -9,7 +9,7 @@ type Group<T extends string> = `(${T})`;
 
 type SharedSegment = Group<"index"> | Group<"search"> | Group<"profile">;
 
-export function PostCmp({ item, onPressPlay }: { item: Post; onPressPlay: (uri: string) => void }) {
+export function PostCmp({ item, onPressPlay, trackUri }: { trackUri: string; item: Post; onPressPlay: (uri: string) => void }) {
 	const [segment] = useSegments() as [SharedSegment];
 	const router = useRouter();
 	const theme = useTheme();
@@ -121,7 +121,7 @@ export function PostCmp({ item, onPressPlay }: { item: Post; onPressPlay: (uri: 
 					<Pressable
 						onPress={() => {
 							// router.push(`/${segment}/post/${item.id}`);
-							Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
+							// Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
 						}}
 						style={[
 							{
@@ -145,7 +145,7 @@ export function PostCmp({ item, onPressPlay }: { item: Post; onPressPlay: (uri: 
 								},
 							]}
 						>
-							Play
+							{trackUri === item.id ? "Now Playing" : "Play"}
 						</Text>
 					</Pressable>
 				</View>

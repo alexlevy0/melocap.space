@@ -55,6 +55,13 @@ export default function Search() {
 	}, [params.q ?? ""]);
 
 	useEffect(() => {
+		console.log('searchResult--->', searchResult);
+		if (trackUri && !searchResult) {
+			setTrackUri(undefined)
+		}
+	}, []);
+
+	useEffect(() => {
 		const fetch = async () => {
 			if (!spotifyAccessToken || !params.q) {
 				return
@@ -72,10 +79,15 @@ export default function Search() {
 
 	const onPressPlay = (uri: string) => {
 		console.log({ uri });
+		if (trackUri) {
+			setTrackUri(undefined)
+			return
+		}
 		setTrackUri(uri)
 	}
 
 	const onChangeText = (event: string | { nativeEvent: { text: string } }) => {
+		setTrackUri(undefined)
 		if (Platform.OS === 'web' && typeof event === 'string') {
 			router.setParams({ q: event });
 			setTimeout(() => {
@@ -151,7 +163,7 @@ export default function Search() {
 			/>
 			{Platform.OS === 'web' ? <SearchBar onPress={onPressSearch} onChangeText={onChangeText} /> : null}
 			<Feed
-				// data={filteredPosts}
+				trackUri={trackUri}
 				onPressPlay={onPressPlay}
 				data={searchResult}
 				contentInsetAdjustmentBehavior="automatic"
@@ -159,12 +171,11 @@ export default function Search() {
 			{trackUri && (
 				<View
 					style={{
-						flex: 0,
-						height: 153,
+						backgroundColor: "$background",
+						height: 154,
 						width: "100%",
 					}}
 				>
-
 					<Iframe
 						uri={`https://open.spotify.com/embed/track/${trackUri}?go=1`}
 						style={{
@@ -173,8 +184,6 @@ export default function Search() {
 					/>
 				</View>
 			)}
-
-
 		</>
 	);
 }
@@ -182,13 +191,11 @@ export default function Search() {
 const SearchBar = ({ onPress, onChangeText }: { onPress: () => void, onChangeText: (text: string) => void }) => {
 	const params = useLocalSearchParams<{ q?: string }>();
 	return (
-		<>
-			<View style={{ backgroundColor: "$background", height: 50, width: "100%", justifyContent: "center" }}>
-				<XStack alignItems="center" space="$2" padding="$2">
-					<Input autoFocus size="$4" onChangeText={onChangeText} value={params.q} flex={1} placeholder={`Search Music...`} />
-					<Button onPress={onPress}>Go</Button>
-				</XStack>
-			</View>
-		</>
+		<View style={{ backgroundColor: "$background", height: 70, width: "100%", justifyContent: "center" }}>
+			<XStack alignItems="center" space="$2" padding="$2">
+				<Input autoFocus size="$5" onChangeText={onChangeText} value={params.q} flex={1} placeholder={`Search Music...`} />
+				<Button size="$5" onPress={onPress}>Go</Button>
+			</XStack>
+		</View>
 	)
 }
