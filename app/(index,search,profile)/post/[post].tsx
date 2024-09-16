@@ -6,12 +6,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { PostCmp } from "@/components/post";
 import { posts } from "@/data";
 
-// Run in Node.js environments at build time to generate a list of
-// pages that should be statically generated.
-export function generateStaticParams() {
-	return posts.map(({ id }) => ({ post: String(id) }));
-}
-
 export default function Post() {
 	const { post: id } = useLocalSearchParams<{ post: string }>();
 
