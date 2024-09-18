@@ -1,6 +1,6 @@
 # MeloCap
 
-**The Epic Musical Bet-to-Play Game**
+The Epic Musical Bet-to-Play Game
 
 MeloCap is an open-source musical game designed to immerse players in a unique and fantastical musical game. Each interaction and performance creates a distinctive soundscape, making the game an auditory and interactive experience.
 
@@ -31,7 +31,7 @@ MeloCap is an open-source game powered by the Stellar blockchain. The business m
 
 The value of MeloCap will be driven by offert and need. Several factors will contribute into its expansion:
 
-1. **User Engagement**: The more players and the more frequently the appl is used, the higher the neeed for MeloCap.
+1. **User Engagement**: The more players and the more frequently the app is used, the higher the need for MeloCap.
       - Players will be incentivized by saving reward that will later be exchanged for MeloCap.
 2. **In-Game Usage**: Players will start using MeloCap for premium features, bets, and interactions with gamers, increasing internal need for the token.
 3. **Market Exchange**: Once listed on exchanges, MeloCap will be available for a larger audience, stimulating transactions and demand for the token.
