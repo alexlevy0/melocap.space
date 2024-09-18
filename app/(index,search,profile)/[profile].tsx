@@ -10,13 +10,14 @@ import Head from "expo-router/head";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { alert } from "@/components/alert";
 import { Feed } from "@/components/feed";
 import { posts, users } from "@/data";
 import { goldenRatio } from "@/utils";
 import { onPressBottomSheet } from "@/utils/bottomSheet";
-import { useState } from "react";
+import { currentAuthenticatedUser } from "@/utils/user/currentAuthenticatedUser";
+import { useEffect, useState } from "react";
 import { Input, Paragraph, XStack, YStack } from "tamagui";
-import { alert } from "@/components/alert";
 
 
 export default function Profile() {
@@ -104,6 +105,16 @@ export function ProfileScreen({ profile }: { profile: string }) {
 			</ScrollView>
 		);
 	}
+
+	useEffect(() => {
+		const fetch = async () => {
+			const _user = await currentAuthenticatedUser()
+			console.log({ _user });
+			// TODO
+		}
+		fetch()
+	}, []);
+
 
 	return (
 		<Authenticator.Provider>
