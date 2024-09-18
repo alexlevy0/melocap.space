@@ -12,14 +12,13 @@ export const auth = defineAuth({
 			// 	clientId: secret("GOOGLE_CLIENT_ID"),
 			// 	clientSecret: secret("GOOGLE_CLIENT_SECRET"),
 			// },
-			signInWithApple: {
-				// TODO
-				clientId: secret("SIWA_CLIENT_ID") || "",
-				keyId: secret("SIWA_KEY_ID") || "",
-				privateKey: secret("SIWA_PRIVATE_KEY") || "",
-				teamId: secret("SIWA_TEAM_ID") || "",
-				scopes: ["email"],
-			},
+			// signInWithApple: {
+			// 	clientId: secret("SIWA_CLIENT_ID") || "",
+			// 	keyId: secret("SIWA_KEY_ID") || "",
+			// 	privateKey: secret("SIWA_PRIVATE_KEY") || "",
+			// 	teamId: secret("SIWA_TEAM_ID") || "",
+			// 	scopes: ["email"],
+			// },
 			// facebook: {
 			// 	clientId: secret("FACEBOOK_CLIENT_ID"),
 			// 	clientSecret: secret("FACEBOOK_CLIENT_SECRET"),
