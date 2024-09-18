@@ -1,40 +1,26 @@
-import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { FeatureCard } from "@/components/FeatureCard";
-import { Header } from "@/components/HeaderComponent";
-import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
+import { Authenticator } from "@aws-amplify/ui-react-native";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
-import { Ionicons } from "@expo/vector-icons";
 import {
 	DarkTheme,
 	DefaultTheme,
-	NavigationContainer,
-	ThemeProvider,
+	ThemeProvider
 } from "@react-navigation/native";
 import * as Sentry from '@sentry/react-native';
 import { Amplify } from "aws-amplify";
-import { getCurrentUser } from "aws-amplify/auth";
 import { isRunningInExpoGo } from 'expo';
-import { BlurView } from "expo-blur";
 import { useFonts } from "expo-font";
 import { Tabs, useNavigationContainerRef } from "expo-router";
-import Head from "expo-router/head";
 import React, { useEffect } from "react";
-import { SafeAreaView, StyleSheet, View, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
-	Button,
-	H1,
-	H2,
 	TamaguiProvider,
-	Theme,
-	XStack,
-	YStack,
+	Theme
 } from "tamagui";
 
-import "@/styles/styles.module.css";
 import outputs from "@/amplify_outputs.json";
 import { makeIcon } from "@/components/icon";
-import { SocialButtons } from "@/icons";
+import "@/styles/styles.module.css";
 import { tamaguiConfig } from "@/tamagui.config";
 import { sayHello } from "@/utils/function";
 
