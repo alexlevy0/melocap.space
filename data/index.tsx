@@ -220,13 +220,13 @@ export const DATA = [
 				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
-				id: "5e6f7g8h2",
+				id: "5e6f7g8h2zdzd",
 				name: "Dessert Lovers",
 				description: "Best Dessert recipes.",
 				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
-				id: "5e6f7g8h2",
+				id: "5e6f7g8h2dxxe",
 				name: "Dessert Lovers",
 				description: "Best Dessert recipes.",
 				image: "https://picsum.photos/seed/696/3000/2000",
@@ -399,7 +399,7 @@ export const DATA = [
 				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
-				id: "p5e6f7g8h2",
+				id: "p5e6f7g8hcce2",
 				name: "Dessert Lovers",
 				description: "Best Dessert recipes.",
 				image: "https://picsum.photos/seed/696/3000/2000",
