@@ -3,7 +3,7 @@ import { useActionSheet } from "@expo/react-native-action-sheet";
 import { useTheme } from "@react-navigation/native";
 import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
-import { deleteUser, updatePassword } from 'aws-amplify/auth';
+import { deleteUser, updatePassword, type FetchUserAttributesOutput, type GetCurrentUserOutput } from 'aws-amplify/auth';
 import { Image } from "expo-image";
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import Head from "expo-router/head";
@@ -15,9 +15,12 @@ import { Feed } from "@/components/feed";
 import { posts, users } from "@/data";
 import { goldenRatio } from "@/utils";
 import { onPressBottomSheet } from "@/utils/bottomSheet";
-import { currentAuthenticatedUser } from "@/utils/user/currentAuthenticatedUser";
+// import { currentAuthenticatedUser } from "@/utils/user/currentAuthenticatedUser";
 import { useEffect, useState } from "react";
 import { Input, Paragraph, XStack, YStack } from "tamagui";
+import { fetchCurrentAuthenticatedUser } from "@/utils/currentAuthenticatedUser/fetch";
+import { fetchCurrentAuthenticatedUserAttributes } from "@/utils/currentAuthenticatedUser/fetchAttributes";
+import { handleUpdateUserAttribute } from "@/utils/currentAuthenticatedUser/updateAttribute";
 
 
 export default function Profile() {
@@ -26,12 +29,15 @@ export default function Profile() {
 }
 
 export function ProfileScreen({ profile }: { profile: string }) {
-	const user = users.find((user) => user.user === profile);
+	// console.log({ profile });
+	// const user = users.find((user) => user.user === profile);
 	const theme = useTheme();
 
 	const { authStatus } = useAuthenticator((context) => [
 		context.authStatus,
 	]);
+
+
 	const isLoggedIn = [authStatus].includes("authenticated");
 	const { showActionSheetWithOptions } = useActionSheet();
 	const { signOut } = useAuthenticator();
@@ -40,9 +46,40 @@ export function ProfileScreen({ profile }: { profile: string }) {
 	const [verifyPassword, setVerifyPassword] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 
+	const [user, setUser] = useState<GetCurrentUserOutput>();
+	const [userAttr, setUserAttr] = useState<FetchUserAttributesOutput>();
+
 	const onPressAccountIndex = () => {
 		setIsSettingsDisplayed(!isSettingsDisplayed)
 	};
+	useEffect(() => {
+		const fetch = async () => {
+			const user = await fetchCurrentAuthenticatedUser()
+			const userAttr = await fetchCurrentAuthenticatedUserAttributes()
+			setUser(user)
+			setUserAttr(userAttr)
+			// console.log({ user });
+			initUserRewardAttribute(userAttr)
+			// initUserGamePlayedAttribute(userAttr)
+		}
+		fetch()
+
+	}, []);
+
+	function initUserRewardAttribute(userAttr: FetchUserAttributesOutput) {
+		console.log({ userAttr });
+		const reward = userAttr['custom:reward'];
+		if (reward) {
+			handleUpdateUserAttribute('custom:reward', JSON.stringify([]))
+		}
+	}
+	function initUserGamePlayedAttribute(userAttr: FetchUserAttributesOutput) {
+		console.log({ userAttr });
+		const reward = userAttr['custom:gamePlayed'];
+		if (reward) {
+			handleUpdateUserAttribute('custom:gamePlayed', JSON.stringify([]))
+		}
+	}
 
 	const onPress = () => {
 		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, onPressAccountIndex });
@@ -106,21 +143,12 @@ export function ProfileScreen({ profile }: { profile: string }) {
 		);
 	}
 
-	useEffect(() => {
-		const fetch = async () => {
-			const _user = await currentAuthenticatedUser()
-			console.log({ _user });
-			// TODO
-		}
-		fetch()
-	}, []);
-
 
 	return (
 		<Authenticator.Provider>
 			<Authenticator socialProviders={[/*'apple' , 'facebook', 'google' */]}>
 				<Head>
-					<title>{user.name} | Profile</title>
+					<title>{user.signInDetails.loginId} | Profile</title>
 					<meta name="description" content={user.bio} />
 					<meta
 						property="og:description"
@@ -206,7 +234,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 									paddingTop: 24,
 								}}
 							>
-								<Image
+								{/* <Image
 									// source={user.image}
 									source={
 										"https://picsum.photos/seed/696/3000/2000"
@@ -217,7 +245,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 										borderRadius:
 											64 / 2,
 									}}
-								/>
+								/> */}
 								<View>
 									<Text
 										style={{
@@ -228,9 +256,9 @@ export function ProfileScreen({ profile }: { profile: string }) {
 												.text,
 										}}
 									>
-										{user.name}
+										{user.signInDetails.loginId}
 									</Text>
-									<Text
+									{/* <Text
 										style={{
 											fontSize: 16,
 											opacity: 0.6,
@@ -240,9 +268,9 @@ export function ProfileScreen({ profile }: { profile: string }) {
 										}}
 									>
 										@{user.user}
-									</Text>
+									</Text> */}
 								</View>
-								<Text
+								{/* <Text
 									style={{
 										fontSize: 16,
 										color: theme
@@ -251,8 +279,8 @@ export function ProfileScreen({ profile }: { profile: string }) {
 									}}
 								>
 									{user.bio}
-								</Text>
-								<Link
+								</Text> */}
+								{/* <Link
 									style={{
 										color: "dodgerblue",
 									}}
@@ -267,7 +295,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 											/^https?:\/\//,
 											"",
 										)}
-								</Link>
+								</Link> */}
 								<YStack
 									gap="$2"
 									margin="$4"
@@ -325,27 +353,6 @@ export function ProfileScreen({ profile }: { profile: string }) {
 												}}
 											>
 												Game count
-											</Text>
-										</Text>
-										<Text
-											style={{
-												fontSize: 16,
-												fontWeight: "bold",
-												color: theme
-													.colors
-													.text,
-											}}
-										>
-											{user.followers}{" "}
-											<Text
-												style={{
-													opacity: 0.6,
-													color: theme
-														.colors
-														.text,
-												}}
-											>
-												Longest streak
 											</Text>
 										</Text>
 									</View>
