@@ -56,10 +56,10 @@ export function ProfileScreen({ profile }: { profile: string }) {
 		const fetch = async () => {
 			const user = await fetchCurrentAuthenticatedUser()
 			const userAttr = await fetchCurrentAuthenticatedUserAttributes()
-			setUser(user)
-			setUserAttr(userAttr)
+			// setUser(user)
+			// setUserAttr(userAttr)
 			// console.log({ user });
-			initUserRewardAttribute(userAttr)
+			// initUserRewardAttribute(userAttr)
 			// initUserGamePlayedAttribute(userAttr)
 		}
 		fetch()
@@ -135,29 +135,29 @@ export function ProfileScreen({ profile }: { profile: string }) {
 			console.log(error);
 		}
 	}
-	if (!user) {
-		return (
-			<ScrollView contentInsetAdjustmentBehavior="automatic">
-				<Text>User not found: {profile}</Text>
-			</ScrollView>
-		);
-	}
+	// if (!user) {
+	// 	return (
+	// 		<ScrollView contentInsetAdjustmentBehavior="automatic">
+	// 			<Text>User not found: {profile}</Text>
+	// 		</ScrollView>
+	// 	);
+	// }
 
 
 	return (
 		<Authenticator.Provider>
 			<Authenticator socialProviders={[/*'apple' , 'facebook', 'google' */]}>
 				<Head>
-					<title>{user.signInDetails.loginId} | Profile</title>
-					<meta name="description" content={user.bio} />
-					<meta
+					{/* <title>{user.signInDetails.loginId} | Profile</title> */}
+					{/* <meta name="description" content={user.bio} /> */}
+					{/* <meta
 						property="og:description"
 						content={user.bio}
 					/>
 					<meta
 						property="og:image"
 						content={user.image}
-					/>
+					/> */}
 				</Head>
 				<Stack.Screen options={{ title: "Profile" }} />
 				<Stack.Screen
