@@ -54,11 +54,14 @@ export function ProfileScreen({ profile }: { profile: string }) {
 		const fetch = async () => {
 			const user = await fetchCurrentAuthenticatedUser()
 			const userAttr = await fetchCurrentAuthenticatedUserAttributes()
-			// setUser(user)
-			// setUserAttr(userAttr)
+			if (!user || !userAttr) {
+				return
+			}
+			setUser(user)
+			setUserAttr(userAttr)
 			// console.log({ user });
-			// initUserRewardAttribute(userAttr)
-			// initUserGamePlayedAttribute(userAttr)
+			initUserRewardAttribute(userAttr)
+			initUserGamePlayedAttribute(userAttr)
 		}
 		fetch()
 
@@ -80,9 +83,9 @@ export function ProfileScreen({ profile }: { profile: string }) {
 	}
 
 	function onPressAccountIndex() {
-		navigation.navigate('profile' as never);
+		setIsSettingsDisplayed(!isSettingsDisplayed)
 	}
-	
+
 	const onPress = () => {
 		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, onPressAccountIndex });
 	};
@@ -146,17 +149,19 @@ export function ProfileScreen({ profile }: { profile: string }) {
 	// }
 
 
+	console.log({ user });
 	return (
 		<Authenticator.Provider>
 			<Authenticator socialProviders={[/*'apple' , 'facebook', 'google' */]}>
 				<Head>
-					{/* <title>{user.signInDetails.loginId} | Profile</title> */}
+					{/* <title>{user?.signInDetails?.loginId} | Profile</title> */}
+					<title>Profile</title>
 					{/* <meta name="description" content={user.bio} /> */}
 					{/* <meta
 						property="og:description"
 						content={user.bio}
-					/>
-					<meta
+					/> */}
+					{/* <meta
 						property="og:image"
 						content={user.image}
 					/> */}
@@ -236,7 +241,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 									paddingTop: 24,
 								}}
 							>
-								{/* <Image
+								<Image
 									// source={user.image}
 									source={
 										"https://picsum.photos/seed/696/3000/2000"
@@ -247,7 +252,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 										borderRadius:
 											64 / 2,
 									}}
-								/> */}
+								/>
 								<View>
 									<Text
 										style={{
@@ -258,7 +263,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 												.text,
 										}}
 									>
-										{/* {user.signInDetails.loginId} */}
+										{user?.signInDetails?.loginId}
 									</Text>
 									{/* <Text
 										style={{
