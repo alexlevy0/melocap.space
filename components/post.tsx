@@ -9,20 +9,27 @@ type Group<T extends string> = `(${T})`;
 
 type SharedSegment = Group<"index"> | Group<"search"> | Group<"profile">;
 
-export function PostCmp({ item, onPressPlay, trackUri }: { trackUri: string; item: Post; onPressPlay: (uri: string) => void }) {
+type PostCmpProps = {
+	item: Post;
+	onPressPlay: (uri: string) => void;
+	trackUri: string;
+};
+
+export function PostCmp({
+	item,
+	onPressPlay,
+	trackUri,
+}: PostCmpProps) {
 	const [segment] = useSegments() as [SharedSegment];
 	const router = useRouter();
 	const theme = useTheme();
 	return (
 		<Pressable
 			onPress={() => {
-				// router.push(`/${segment}/post/1`);
-				// router.push(`/${segment}/post/${item.id}`);
-				// Linking.openURL(`https://open.spotify.com/track/${item.id}?go=1`);
-				onPressPlay(item.id);
+				onPressPlay?.(item.id);
 			}}
 		>
-			{({ hovered, pressed }) => (
+			{({ pressed }) => (
 				<View
 					style={[
 						{
@@ -38,23 +45,18 @@ export function PostCmp({ item, onPressPlay, trackUri }: { trackUri: string; ite
 								"$background0",
 						},
 						hovered && {
-							// backgroundColor: "#ddd",
 							backgroundColor:
 								"$background-hover",
 						},
 						pressed && {
-							// backgroundColor: "#ccc",
-							// backgroundColor: "yellow",
 							backgroundColor:
 								"$background0",
-							// backgroundColor: '$background',
 						},
 					]}
 				>
 					<Image
 						source={{
 							uri: item.user.image,
-							// uri: "https://picsum.photos/seed/696/3000/2000",
 						}}
 						style={{
 							width: 48,
@@ -78,9 +80,7 @@ export function PostCmp({ item, onPressPlay, trackUri }: { trackUri: string; ite
 									alignItems: "flex-start",
 								}}
 							>
-								{({
-									hovered,
-								}) => (
+								{() => (
 									<Text
 										style={[
 											{
@@ -90,10 +90,7 @@ export function PostCmp({ item, onPressPlay, trackUri }: { trackUri: string; ite
 													.colors
 													.text,
 											},
-											hovered && {
-												textDecorationLine:
-													"underline",
-											},
+
 										]}
 									>
 										{
