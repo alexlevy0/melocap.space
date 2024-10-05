@@ -1,4 +1,4 @@
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import Head from "expo-router/head";
 import { useColorScheme } from "react-native";
 import "react-native-reanimated";
@@ -22,8 +22,14 @@ export default function Home() {
 	const isLoggedIn = [authStatus].includes("authenticated");
 	const { showActionSheetWithOptions } = useActionSheet();
 	const { signOut } = useAuthenticator();
+	const navigation = useNavigation();
+
+	const onPressAccountIndex = () => {
+		navigation.navigate('profile' as never);
+	}
+
 	const onPress = () => {
-		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus });
+		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus, onPressAccountIndex });
 	};
 	return (
 		<>
