@@ -5,7 +5,7 @@ import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
 import { deleteUser, updatePassword, type FetchUserAttributesOutput, type GetCurrentUserOutput } from 'aws-amplify/auth';
 import { Image } from "expo-image";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useNavigation } from "expo-router";
 import Head from "expo-router/head";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -32,6 +32,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 	// console.log({ profile });
 	// const user = users.find((user) => user.user === profile);
 	const theme = useTheme();
+	const navigation = useNavigation();
 
 	const { authStatus } = useAuthenticator((context) => [
 		context.authStatus,
@@ -49,9 +50,6 @@ export function ProfileScreen({ profile }: { profile: string }) {
 	const [user, setUser] = useState<GetCurrentUserOutput>();
 	const [userAttr, setUserAttr] = useState<FetchUserAttributesOutput>();
 
-	const onPressAccountIndex = () => {
-		setIsSettingsDisplayed(!isSettingsDisplayed)
-	};
 	useEffect(() => {
 		const fetch = async () => {
 			const user = await fetchCurrentAuthenticatedUser()
@@ -81,6 +79,10 @@ export function ProfileScreen({ profile }: { profile: string }) {
 		}
 	}
 
+	function onPressAccountIndex() {
+		navigation.navigate('profile' as never);
+	}
+	
 	const onPress = () => {
 		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, onPressAccountIndex });
 	};
@@ -256,7 +258,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 												.text,
 										}}
 									>
-										{user.signInDetails.loginId}
+										{/* {user.signInDetails.loginId} */}
 									</Text>
 									{/* <Text
 										style={{
@@ -321,7 +323,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 													.text,
 											}}
 										>
-											{user.followers}{" "}
+											{/* {user.followers}{" "} */}
 											<Text
 												style={{
 													opacity: 0.6,
@@ -343,7 +345,7 @@ export function ProfileScreen({ profile }: { profile: string }) {
 													.text,
 											}}
 										>
-											{user.followers}{" "}
+											{/* {user.followers}{" "} */}
 											<Text
 												style={{
 													opacity: 0.6,

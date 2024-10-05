@@ -2,7 +2,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react-native";
 import { useActionSheet } from "@expo/react-native-action-sheet";
 import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import * as Sentry from "@sentry/react-native";
 import { Iframe } from "@bounceapp/iframe"
@@ -35,8 +35,14 @@ export default function Search() {
 	const isLoggedIn = [authStatus].includes("authenticated");
 	const { showActionSheetWithOptions } = useActionSheet();
 	const { signOut } = useAuthenticator();
+	const navigation = useNavigation();
+
+	const onPressAccountIndex = () => {
+		navigation.navigate('profile' as never);
+	}
+
 	const onPress = () => {
-		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus });
+		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus, onPressAccountIndex });
 	};
 	const [searchResult, setSearchResult] = useState()
 	const [trackUri, setTrackUri] = useState<string>()
