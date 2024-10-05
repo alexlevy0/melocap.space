@@ -153,13 +153,13 @@ export function ProfileScreen({ profile }: { profile: string }) {
 		<Authenticator.Provider>
 			<Authenticator socialProviders={[/*'apple' , 'facebook', 'google' */]}>
 				<Head>
-					<title>{user?.signInDetails?.loginId} | Profile</title>
+					<title>{user?.signInDetails?.loginId ?? "Profile"}</title>
 					{/* <meta name="description" content={user.bio} /> */}
-					{/* <meta
+						{/* <meta
 						property="og:description"
 						content={user.bio}
 					/> */}
-					{/* <meta
+						{/* <meta
 						property="og:image"
 						content={user.image}
 					/> */}

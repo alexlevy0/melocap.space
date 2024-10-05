@@ -39,6 +39,7 @@ export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLogg
                                                 signOut();
                                                 return;
                                         }
+                                        onPressAccountIndex?.()
                                         return;
 
                                 case cancelButtonIndex:
