@@ -1,25 +1,24 @@
-export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLoggedIn, onPressAccountIndex,  }: {
+export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLoggedIn, onPressAccountIndex, }: {
         signOut: () => void;
-        showActionSheetWithOptions: unknown;
+        showActionSheetWithOptions: (options: {
+                title?: string;
+                message?: string;
+                options: string[];
+                cancelButtonIndex?: number;
+                destructiveButtonIndex?: number;
+        }, callback: (selectedIndex?: number) => void) => void;
         isLoggedIn: boolean;
-        onPressBottomSheet?: () => void;
+        onPressAccountIndex?: () => void;
 }) => {
 
         const options = [
                 "Votre compte",
-                // "Sécurité et accès au compte",
-                // "Premium",
-                // "Monétisation",
-                // "Confidentialité et sécurité",
-                // "Notification",
-                "Accessibilité, affichage et langues",
-                // "Resssources supplémentaires",
                 isLoggedIn ? "Déconnexion" : "Connexion",
                 "Cancel",
         ];
         const AccountIndex = 0;
-        const LogButtonIndex = options.length - 2;
-        const cancelButtonIndex = options.length - 1;
+        const LogButtonIndex = 1;
+        const cancelButtonIndex = 2;
 
         showActionSheetWithOptions(
                 {
@@ -32,7 +31,7 @@ export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLogg
                 (selectedIndex: number | undefined) => {
                         switch (selectedIndex) {
                                 case AccountIndex:
-                                        onPressAccountIndex()
+                                        onPressAccountIndex?.()
                                         break;
 
                                 case LogButtonIndex:
