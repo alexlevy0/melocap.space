@@ -149,13 +149,11 @@ export function ProfileScreen({ profile }: { profile: string }) {
 	// }
 
 
-	console.log({ user });
 	return (
 		<Authenticator.Provider>
 			<Authenticator socialProviders={[/*'apple' , 'facebook', 'google' */]}>
 				<Head>
-					{/* <title>{user?.signInDetails?.loginId} | Profile</title> */}
-					<title>Profile</title>
+					<title>{user?.signInDetails?.loginId} | Profile</title>
 					{/* <meta name="description" content={user.bio} /> */}
 					{/* <meta
 						property="og:description"
