@@ -44,10 +44,6 @@ export function PostCmp({
 							backgroundColor:
 								"$background0",
 						},
-						hovered && {
-							backgroundColor:
-								"$background-hover",
-						},
 						pressed && {
 							backgroundColor:
 								"$background0",
