@@ -161,21 +161,21 @@ export const DATA = [
 		subGroups: [
 			{
 				id: "1a2b3c4d1",
-				name: "AI Enthusiasts",
-				description: "AI tricks and tips.",
+				name: "Laisse pas traîner ton fils",
+				description: "Sinik (2006)",
 				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
 				id: "1a2b3cx4d2",
-				name: "Blockchain Pioneers",
+				name: "La vie qui va avec",
 				description:
-					"Join for iscussions on blockchain technology.",
+					"Booba (2006)",
 				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 			{
 				id: "1a2b3fc4d1",
-				name: "AI Enthusiasts",
-				description: "AI tricks and tips.",
+				name: "Avant qu’elle parte",
+				description: "Diam’s (2006)",
 				image: "https://picsum.photos/seed/696/3000/2000",
 			},
 		],
