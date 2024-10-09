@@ -92,7 +92,6 @@ const App: React.FC = () => {
 		return null;
 	}
 	return (
-		// <NavigationContainer theme={MyTheme}>
 		<ActionSheetProvider>
 			<TamaguiProvider
 				config={tamaguiConfig}
@@ -120,7 +119,6 @@ const App: React.FC = () => {
 				</ThemeProvider>
 			</TamaguiProvider>
 		</ActionSheetProvider>
-		// </NavigationContainer>
 	);
 };
 
