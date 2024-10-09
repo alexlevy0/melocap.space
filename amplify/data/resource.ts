@@ -6,18 +6,18 @@ const schema = a.schema({
 	sayHello: a
 		.query()
 		.arguments({
-	  		name: a.string(),
+			name: a.string(),
 		})
 		.returns(a.string())
 		.handler(a.handler.function(sayHello))
 		.authorization(allow => [allow.authenticated()]),
 
-	// Todo: a
-	// .model({
-	// 	content: a.string(),
-	// 	isDone: a.boolean()
-	// })
-	// .authorization(allow => [allow.owner()])
+	Todo: a
+		.model({
+			content: a.string(),
+			isDone: a.boolean(),
+		})
+		.authorization(allow => [allow.owner(),  allow.guest().to(['read', 'delete', 'create', 'update'])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
