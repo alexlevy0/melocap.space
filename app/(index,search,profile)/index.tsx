@@ -1,20 +1,27 @@
+import { useAuthenticator } from "@aws-amplify/ui-react-native";
+import { useActionSheet } from "@expo/react-native-action-sheet";
+import { useTheme } from "@react-navigation/native";
+import { Button } from "@tamagui/button";
+import { MoreVertical } from '@tamagui/lucide-icons';
+import { generateClient } from 'aws-amplify/data';
 import { Stack, useNavigation } from "expo-router";
 import Head from "expo-router/head";
 import { useColorScheme } from "react-native";
 import "react-native-reanimated";
+import { YStack } from "tamagui";
 
-import { Feed } from "@/components/feed";
-import { posts } from "@/data";
+import type { Schema } from '@/amplify/data/resource';
 import { FeedAnimated } from "@/components/feedAnimated";
-import { Button } from "@tamagui/button";
 import { goldenRatio } from "@/utils";
 import { onPressBottomSheet } from "@/utils/bottomSheet";
-import { useAuthenticator } from "@aws-amplify/ui-react-native";
-import { useActionSheet } from "@expo/react-native-action-sheet";
-import { MoreVertical } from "@tamagui/lucide-icons";
+import { useEffect, useState } from "react";
+
+const client = generateClient<Schema>()
+
 
 export default function Home() {
 	const colorScheme = useColorScheme();
+	const theme = useTheme();
 
 	const { authStatus } = useAuthenticator((context) => [
 		context.authStatus,
@@ -31,6 +38,15 @@ export default function Home() {
 	const onPress = () => {
 		onPressBottomSheet({ signOut, showActionSheetWithOptions, isLoggedIn, authStatus, onPressAccountIndex });
 	};
+
+	const createTodo = async () => {
+		await client.models.Todo.create({
+			content: window.prompt("Todo content?"),
+			isDone: false,
+		});
+	};
+
+
 	return (
 		<>
 			<Head>
@@ -54,6 +70,18 @@ export default function Home() {
 					),
 				}}
 			/>
+			{/* isLoggedIn && */
+				<YStack
+					backgroundColor={theme.colors.background}
+					gap="$2"
+					margin="$3"
+					padding="$2"
+					alignItems="left"
+				>
+					<Button size="$5" variant="outlined" color={theme.colors.primary} onPress={createTodo}>Add new Record</Button>
+				</YStack>
+			}
+
 			{/* <Feed
 				contentInsetAdjustmentBehavior="automatic"
 				data={posts}

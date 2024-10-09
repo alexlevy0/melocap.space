@@ -1,12 +1,15 @@
+import type { Schema } from "@/amplify/data/resource";
 import { DATA } from "@/data";
 import type { GROUP, SubGroupRenderTypes } from "@/types";
+import { useAuthenticator } from "@aws-amplify/ui-react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useTheme } from "@react-navigation/native";
+import { generateClient } from "aws-amplify/api";
 import { BlurView } from "expo-blur";
 import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	type LayoutChangeEvent,
 	Platform,
@@ -24,6 +27,8 @@ import Animated, {
 	withSpring,
 	withTiming,
 } from "react-native-reanimated";
+
+const client = generateClient<Schema>()
 
 const ITEM_HEIGHT = 80;
 const GAP = 8;
@@ -96,7 +101,16 @@ const SubGroupRender = ({ val, i, isSubGroups }: SubGroupRenderTypes) => {
 const RenderItem = ({
 	item,
 	bottomPadding,
-}: { item: GROUP; index: number; bottomPadding: SharedValue<number> }) => {
+	onLongPress,
+	index,
+	id,
+}: {
+	item: GROUP;
+	index: number;
+	bottomPadding: SharedValue<number>,
+	onLongPress: (id: string) => void,
+	id: string,
+}) => {
 	const theme = useTheme();
 	const colorScheme = useColorScheme();
 
@@ -150,6 +164,7 @@ const RenderItem = ({
 			onLayout={isSubGroups ? onLayout : undefined}
 		>
 			<Pressable
+				onLongPress={() => onLongPress(id)}
 				onPress={setGroup}
 				style={[
 					styles.groupListItem,
@@ -163,7 +178,7 @@ const RenderItem = ({
 				]}
 			>
 				<CustomBlurView />
-				{item.subGroups?.length > 0 && (
+				{item?.subGroups?.length > 0 && (
 					<Animated.View
 						style={[
 							styles.chevronIcon,
@@ -191,6 +206,7 @@ const RenderItem = ({
 					]}
 				>
 					{item.name}
+					{/* {item} */}
 				</Text>
 				<Text
 					style={[
@@ -206,7 +222,7 @@ const RenderItem = ({
 				</Text>
 			</Pressable>
 			{
-				item.subGroups?.length > 0 && (
+				item?.subGroups?.length > 0 && (
 					<View style={styles.cardShadow}>
 						<Animated.View
 							{...Platform.select({
@@ -228,7 +244,7 @@ const RenderItem = ({
 								},
 							]}
 						>
-							{item.subGroups.map(
+							{item?.subGroups?.map(
 								(val, i) => (
 									<SubGroupRender
 										key={
@@ -262,6 +278,32 @@ export const FeedAnimated = () => {
 		};
 	});
 
+	const { authStatus } = useAuthenticator((context) => [
+		context.authStatus,
+	]);
+
+
+	const isLoggedIn = [authStatus].includes("authenticated");
+	const [todos, setTodos] = useState<Schema["Todo"]["type"][]>([]);
+
+	useEffect(() => {
+		// if (!isLoggedIn) {
+		// 	return
+		// }
+		const sub = client.models.Todo.observeQuery().subscribe({
+			next: ({ items }) => {
+				setTodos([...items]);
+			},
+		});
+
+		return () => sub.unsubscribe();
+	}, []);
+
+	const onLongPress = async (id) => {
+		const { data: deletedTodo, errors } = await client.models.Todo.delete({ id })
+
+	}
+
 	return (
 		<View style={[styles.container, { paddingTop: Platform.OS !== 'web' ? headerHeight : 0 }]}>
 			{Platform.OS === "android" && (
@@ -277,7 +319,21 @@ export const FeedAnimated = () => {
 						animatedPadding,
 					]}
 				>
-					{DATA.map((item, index) => (
+					{todos.map(({ id, content }, index) => (
+						<RenderItem
+							key={id}
+							id={id}
+							onLongPress={onLongPress}
+							// item={content}
+							item={DATA[index]}
+							index={index}
+							bottomPadding={
+								bottomPadding
+							}
+						/>
+					))}
+
+					{/* {DATA.map((item, index) => (
 						<RenderItem
 							key={item.id}
 							item={item}
@@ -286,7 +342,7 @@ export const FeedAnimated = () => {
 								bottomPadding
 							}
 						/>
-					))}
+					))} */}
 				</Animated.View>
 			</Animated.ScrollView>
 			<Image

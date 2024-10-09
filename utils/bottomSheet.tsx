@@ -10,7 +10,6 @@ export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLogg
         isLoggedIn: boolean;
         onPressAccountIndex?: () => void;
 }) => {
-
         const options = [
                 "Votre compte",
                 isLoggedIn ? "Déconnexion" : "Connexion",
@@ -32,7 +31,7 @@ export const onPressBottomSheet = ({ signOut, showActionSheetWithOptions, isLogg
                         switch (selectedIndex) {
                                 case AccountIndex:
                                         onPressAccountIndex?.()
-                                        break;
+                                        break;  
 
                                 case LogButtonIndex:
                                         if (isLoggedIn) {

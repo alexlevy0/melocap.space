@@ -1,6 +1,6 @@
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react-native";
 import { useActionSheet } from "@expo/react-native-action-sheet";
-import { useTheme } from "@react-navigation/native";
+import { useTheme, type ThemeProvider } from "@react-navigation/native";
 import { Button } from "@tamagui/button";
 import { MoreVertical } from "@tamagui/lucide-icons";
 import { deleteUser, updatePassword, type FetchUserAttributesOutput, type GetCurrentUserOutput } from 'aws-amplify/auth';
@@ -9,6 +9,7 @@ import { Link, Stack, useLocalSearchParams, useNavigation } from "expo-router";
 import Head from "expo-router/head";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { ThemeProvider as AmplifyThemeProvider } from '@aws-amplify/ui-react';
 
 import { alert } from "@/components/alert";
 import { Feed } from "@/components/feed";
@@ -150,16 +151,16 @@ export function ProfileScreen({ profile }: { profile: string }) {
 
 
 	return (
-		<Authenticator.Provider>
+		// <AmplifyThemeProvider colorMode={"system"}>
 			<Authenticator socialProviders={[/*'apple' , 'facebook', 'google' */]}>
 				<Head>
 					<title>{user?.signInDetails?.loginId ?? "Profile"}</title>
 					{/* <meta name="description" content={user.bio} /> */}
-						{/* <meta
+					{/* <meta
 						property="og:description"
 						content={user.bio}
 					/> */}
-						{/* <meta
+					{/* <meta
 						property="og:image"
 						content={user.image}
 					/> */}
@@ -263,44 +264,8 @@ export function ProfileScreen({ profile }: { profile: string }) {
 									>
 										{user?.signInDetails?.loginId}
 									</Text>
-									{/* <Text
-										style={{
-											fontSize: 16,
-											opacity: 0.6,
-											color: theme
-												.colors
-												.text,
-										}}
-									>
-										@{user.user}
-									</Text> */}
+									
 								</View>
-								{/* <Text
-									style={{
-										fontSize: 16,
-										color: theme
-											.colors
-											.text,
-									}}
-								>
-									{user.bio}
-								</Text> */}
-								{/* <Link
-									style={{
-										color: "dodgerblue",
-									}}
-									href={user.url as any}
-								>
-									{user.url
-										.replace(
-											/\/$/,
-											"",
-										)
-										.replace(
-											/^https?:\/\//,
-											"",
-										)}
-								</Link> */}
 								<YStack
 									gap="$2"
 									margin="$4"
@@ -348,7 +313,6 @@ export function ProfileScreen({ profile }: { profile: string }) {
 													.text,
 											}}
 										>
-											{/* {user.followers}{" "} */}
 											<Text
 												style={{
 													opacity: 0.6,
@@ -371,6 +335,6 @@ export function ProfileScreen({ profile }: { profile: string }) {
 					/>
 				)}
 			</Authenticator>
-		</Authenticator.Provider>
+		// </AmplifyThemeProvider>
 	);
 }
