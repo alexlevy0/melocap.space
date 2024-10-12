@@ -17,12 +17,12 @@ export const auth = defineAuth({
 		 * - **maxLen**: Maximum allowed length for this field.
 		 * - **minLen**: Minimum allowed length for this field.
 		 */
-		"custom:display_name": {
-			dataType: "String",
-			mutable: true,
-			maxLen: 256, // Adjust as needed
-			minLen: 0,
-		},
+		// "custom:display_name": {
+		// 	dataType: "String",
+		// 	mutable: true,
+		// 	maxLen: 256, // Adjust as needed
+		// 	minLen: 0,
+		// },
 		/**
 	 		* Consolidated player data containing the latest reward and game played.
 	 		* 
@@ -58,22 +58,22 @@ export const auth = defineAuth({
 	 		* 
 	 		* **Note**: Stored as a JSON string.
 	 		*/
-		...Object.fromEntries(
-			[...Array(15)].flatMap((_, i) => [
-				[`custom:reward${i + 1}`, {
-					dataType: "String",
-					mutable: true,
-					maxLen: 2048,
-					minLen: 0,
-				}],
-				[`custom:gamePlayed${i + 1}`, {
-					dataType: "String",
-					mutable: true,
-					maxLen: 2048,
-					minLen: 0,
-				}],
-			])
-		),
+		// ...Object.fromEntries(
+		// 	[...Array(15)].flatMap((_, i) => [
+		// 		[`custom:reward${i + 1}`, {
+		// 			dataType: "String",
+		// 			mutable: true,
+		// 			maxLen: 2048,
+		// 			minLen: 0,
+		// 		}],
+		// 		[`custom:gamePlayed${i + 1}`, {
+		// 			dataType: "String",
+		// 			mutable: true,
+		// 			maxLen: 2048,
+		// 			minLen: 0,
+		// 		}],
+		// 	])
+		// ),
 	},
 
 	/**
