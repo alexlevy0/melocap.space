@@ -17,12 +17,12 @@ export const auth = defineAuth({
 		 * - **maxLen**: Maximum allowed length for this field.
 		 * - **minLen**: Minimum allowed length for this field.
 		 */
-		// "custom:display_name": {
-		// 	dataType: "String",
-		// 	mutable: true,
-		// 	maxLen: 256, // Adjust as needed
-		// 	minLen: 0,
-		// },
+		"custom:display_name": {
+			dataType: "String",
+			mutable: true,
+			maxLen: 256, // Adjust as needed
+			minLen: 0,
+		},
 		/**
 	 		* Consolidated player data containing the latest reward and game played.
 	 		* 
